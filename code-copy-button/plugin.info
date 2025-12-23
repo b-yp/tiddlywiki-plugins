@@ -1,0 +1,11 @@
+{
+	"title": "$:/plugins/byper/code-copy-button",
+	"name": "Code Copy Button",
+	"description": "A plugin that adds a button to copy code snippets to the clipboard",
+	"author": "Byper",
+	"version": "1.0.0",
+	"core-version": ">=5.0.0",
+	"source": "https://github.com/b-yp/tiddlywiki-plugins",
+	"plugin-type": "plugin",
+	"list": "readme license history"
+}
