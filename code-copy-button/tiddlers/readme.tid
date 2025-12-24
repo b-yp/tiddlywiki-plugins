@@ -1,24 +1,24 @@
 title: $:/plugins/byper/code-copy-button/readme
 type: text/vnd.tiddlywiki
 
-! 代码复制按钮插件
+! Code Copy Button Plugin
 
-为 TiddlyWiki 的代码块自动添加复制按钮。
+Automatically adds copy buttons to code blocks in TiddlyWiki.
 
-!! 功能特性
+!! Features
 
-* 为独立代码块添加复制按钮
-* 为行内代码添加复制按钮（鼠标悬停显示）
-* 复制成功后显示反馈（绿色对勾）
-* 使用 SVG 图标，美观清晰
-* 响应式设计，适配不同主题
-* 自动监听新渲染的代码块
+* Adds a copy button to standalone code blocks
+* Adds a copy button to inline code (shown on hover)
+* Provides feedback after successful copy (green checkmark)
+* Uses SVG icons for clarity and aesthetics
+* Responsive design that adapts to different themes
+* Automatically listens for newly rendered code blocks
 
-!! 使用方法
+!! Usage
 
-安装插件后，所有代码块会自动获得复制功能。
+After installing the plugin, all code blocks will automatically have copy functionality.
 
-!!! 独立代码块示例
+!!! Standalone Code Block Example
 
 ```javascript
 function hello() {
@@ -26,15 +26,15 @@ function hello() {
 }
 ```
 
-代码块右上角会显示复制按钮图标。
+A copy button icon will appear in the top right corner of the code block.
 
-!!! 行内代码示例
+!!! Inline Code Example
 
-在文本中使用 `console.log()` 这样的行内代码，鼠标悬停时会在代码后显示复制按钮。
+When using inline code like `console.log()` in text, a copy button will appear after the code when you hover over it.
 
-!! 自定义样式
+!! Custom Styling
 
-你可以在自定义样式中覆盖按钮外观：
+You can override the button appearance in custom styles:
 
 ```css
 .tc-copy-button {
@@ -42,21 +42,20 @@ function hello() {
 }
 ```
 
-!! 兼容性
+!! Compatibility
 
-* 需要 TiddlyWiki 5.1.22 或更高版本
-* 需要现代浏览器支持 Clipboard API
-* 自动降级到传统复制方法
+* Requires TiddlyWiki 5.1.22 or higher
+* Requires a modern browser that supports the Clipboard API
 
-!! 版本历史
+!! Version History
 
-|!版本|!日期|!更新内容|
-|1.0.0|2025-11-04|初始版本，支持独立代码块和行内代码块复制|
+|!Version|!Date|!Changes|
+|1.0.0|2025-11-04|Initial version, supports standalone and inline code block copying|
 
-!! 作者
+!! Author
 
-byp
+byper
 
-!! 许可
+!! License
 
 MIT License
