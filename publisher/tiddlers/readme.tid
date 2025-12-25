@@ -1,0 +1,47 @@
+title: $:/plugins/byper/publisher/readme
+type: text/vnd.tiddlywiki
+
+! Publisher
+
+One-click build and publish plugin for TiddlyWiki.
+
+Adds a button to the page control bar. Click to build and publish your TiddlyWiki. Build logs are saved in `$:/custom/build-publish-log`.
+
+! Button States
+
+|! State |! Display |! Description |
+| Idle | SVG icon | Ready to publish |
+| Loading | ⏳ Publishing... | Build in progress |
+| Success | ✅ Success | Build succeeded |
+| Failure | ❌ Failed | Build failed |
+| Error | ❌ Error | Network/API error |
+
+! Build Logs
+
+Each build log is saved in `$:/custom/build-publish-log`, containing:
+* Build time
+* Duration
+* Status
+* Build output
+* Deployment output
+
+Keeps the last 10 build records.
+
+! API
+
+Provides `/api/build` POST endpoint with two authentication methods:
+1. TiddlyWiki session authentication
+2. Basic Auth (via environment variables `TW_USERNAME` and `TW_PASSWORD`)
+
+! Files
+
+* `api.js` - API endpoint, handles build requests and logging
+* `button.js` - Page button, displays status and triggers builds
+
+! Author
+
+Byper - [[GitHub|https://github.com/b-yp/tiddlywiki-plugins]]
+
+! Version
+
+1.0.0

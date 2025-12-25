@@ -1,0 +1,4 @@
+title: $:/plugins/byper/publisher/button
+tags: $:/tags/PageControls
+
+<$publisher-button />
