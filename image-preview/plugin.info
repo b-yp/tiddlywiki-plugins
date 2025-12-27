@@ -1,0 +1,11 @@
+{
+	"title": "$:/plugins/byper/image-preview",
+	"name": "Image Preview",
+	"description": "A plugin that adds click-to-enlarge preview for images in TiddlyWiki",
+	"author": "Byper",
+	"version": "1.0.0",
+	"core-version": ">=5.0.0",
+	"source": "https://github.com/b-yp/tiddlywiki-plugins",
+	"plugin-type": "plugin",
+	"list": "readme history"
+}

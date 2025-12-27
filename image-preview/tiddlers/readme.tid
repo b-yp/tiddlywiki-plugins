@@ -1,0 +1,60 @@
+title: $:/plugins/byper/image-preview/readme
+type: text/vnd.tiddlywiki
+
+! Image Preview Plugin
+
+Adds click-to-enlarge preview functionality for images in TiddlyWiki using native JavaScript (no external dependencies).
+
+!! Features
+
+* Click any image to open a full-screen preview
+* Zoom in/out and reset zoom functionality
+* Navigation between multiple images on the same page
+* Keyboard shortcuts (arrows, ESC, Ctrl+/-)
+* Works with dynamically loaded images
+* No external dependencies - pure JavaScript/CSS
+
+!! Usage
+
+After installing the plugin, all images will automatically have preview functionality.
+
+Click on any image to open the preview modal. Use the control buttons or keyboard shortcuts to interact with the image.
+
+[img[https://imgbed.baiyapeng.cc/file/1731898035292_avatar.jpg]]
+
+[img[https://imgbed.baiyapeng.cc/file/1766820604037_bingimg_20251221_UHD.jpg]]
+
+!! Keyboard Shortcuts
+
+|! Key |! Action |
+| ESC | Close preview |
+| ← → | Previous/next image |
+| Ctrl + + / Ctrl + - | Zoom in/out |
+| Ctrl + 0 | Reset zoom to 100% |
+| Click outside image | Close preview |
+| Mouse wheel | Zoom in/out |
+
+!! Controls
+
+* **×** (top right) - Close preview
+* **❮** **❯** (left/right) - Navigate between images
+* **−** **+** (bottom center) - Zoom out/in
+* **↺** (bottom center) - Reset zoom
+
+!! Customization
+
+You can customize the plugin behavior by modifying the plugin's script.js file (CSS, scaling limits, etc.).
+
+!! Version History
+
+|! Version |! Date |! Changes |
+| 1.1.0 | 2025-12-25 | Rewritten with native JavaScript (no ViewerJS dependency) |
+| 1.0.0 | 2025-12-25 | Initial version with ViewerJS (deprecated) |
+
+!! Author
+
+Byper
+
+!! License
+
+MIT License
