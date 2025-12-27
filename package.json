@@ -1,0 +1,14 @@
+{
+  "name": "tiddlywiki-plugins",
+  "private": true,
+  "scripts": {
+    "serve": "tiddlywiki demo --listen",
+    "build": "tiddlywiki demo --build"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

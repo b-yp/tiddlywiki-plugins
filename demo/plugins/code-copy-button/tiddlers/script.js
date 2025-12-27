@@ -1,5 +1,5 @@
 /*\
-title: $:/plugins/yourname/code-copy-button/script.js
+title: $:/plugins/byper/code-copy-button/script.js
 type: application/javascript
 module-type: startup
 
