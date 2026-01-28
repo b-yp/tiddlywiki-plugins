@@ -4,6 +4,11 @@ tags:
 title: Plugins
 type: text/vnd.tiddlywiki
 
+Repository: https://github.com/b-yp/tiddlywiki-plugins
+
+---
+
 * [[$:/plugins/byper/code-copy-button]]
 * [[$:/plugins/byper/publisher]]
 * [[$:/plugins/byper/image-preview]]
+* [[$:/plugins/byper/advanced-search]]

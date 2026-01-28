@@ -1,0 +1,134 @@
+title: $:/plugins/byper/advanced-search/styles
+tags: $:/tags/Stylesheet
+type: text/vnd.tiddlywiki
+
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline html
+
+.advanced-search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 15vh;
+    z-index: 9999;
+}
+
+.advanced-search-modal {
+    background: <<colour tiddler-background>>;
+    color: <<colour foreground>>;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 700px;
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid <<colour tiddler-border>>;
+}
+
+.advanced-search-input-wrapper {
+    padding: 16px;
+    border-bottom: 1px solid <<colour tiddler-border>>;
+}
+
+.advanced-search-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background: <<colour tiddler-editor-background>>;
+    color: <<colour tiddler-editor-foreground>>;
+    border: 2px solid <<colour tiddler-editor-border>>;
+    border-radius: 6px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.advanced-search-input:focus {
+    border-color: <<colour primary>>;
+}
+
+.advanced-search-results {
+    overflow-y: auto;
+    max-height: calc(70vh - 80px);
+}
+
+.advanced-search-item {
+    border-bottom: 1px solid <<colour tiddler-border>>;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.advanced-search-item:hover,
+.advanced-search-item.selected {
+    background: <<colour selection-background>>;
+    /* 如果 selection-background 太深（在某些黑色主题下），可能需要调整文字颜色，但通常 TW 会配对好 */
+}
+
+.advanced-search-item-header {
+    padding: 12px 16px;
+}
+
+.advanced-search-item-title {
+    font-weight: 600;
+    color: <<colour tiddler-title-foreground>>;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.advanced-search-item-meta {
+    font-size: 11px;
+    color: <<colour muted-foreground>>;
+    float: right;
+    margin-left: 8px;
+}
+
+.advanced-search-item-preview {
+    font-size: 13px;
+    color: <<colour foreground>>;
+    opacity: 0.8;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.search-highlight {
+    background: <<colour highlight-background>>;  /* TW default highlight color */
+    color: <<colour highlight-foreground>>;
+    font-weight: 600;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+/* Fallback if highlight-background is missing/bad in some palettes, force readable check? 
+   No, trust the palette. Usually yellow in light, maybe something else in dark. */
+
+.advanced-search-empty {
+    padding: 40px 16px;
+    text-align: center;
+    color: <<colour muted-foreground>>;
+}
+
+/* 打开tiddler后的高亮样式 - 这里可能需要硬编码一些鲜艳的颜色，或者使用 dirty-indicator 等醒目色 */
+.search-target-highlight {
+    background: transparent !important;
+    color: inherit !important;
+    padding: 0;
+    border-radius: 2px;
+    outline: 2px solid <<colour dirty-indicator>>; /* Usually red/orange, very visible */
+    box-shadow: 0 0 4px <<colour dirty-indicator>>;
+}
+
+.search-target-highlight.fade-out {
+    background: transparent !important;
+    color: inherit !important;
+    outline-color: transparent;
+    box-shadow: none;
+    transition: all 1s ease;
+}

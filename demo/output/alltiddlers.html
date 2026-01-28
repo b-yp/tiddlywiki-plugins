@@ -2528,7 +2528,103 @@ a.tc-tiddlylink:hover {
 	word-break: break-all;
 }/* Vertical gaps */.tc-tiny-v-gap-bottom {
 	margin-bottom: 3px;
-}/* 代码块 */
+}.advanced-search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 15vh;
+    z-index: 9999;
+}.advanced-search-modal {
+    background: #ffffff;
+    color: #333333;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 700px;
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ffffff;
+}.advanced-search-input-wrapper {
+    padding: 16px;
+    border-bottom: 1px solid #ffffff;
+}.advanced-search-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background: #f8f8f8;
+    color: ;
+    border: 2px solid #cccccc;
+    border-radius: 6px;
+    outline: none;
+    box-sizing: border-box;
+}.advanced-search-input:focus {
+    border-color: #5778d8;
+}.advanced-search-results {
+    overflow-y: auto;
+    max-height: calc(70vh - 80px);
+}.advanced-search-item {
+    border-bottom: 1px solid #ffffff;
+    cursor: pointer;
+    transition: background 0.1s;
+}.advanced-search-item:hover,
+.advanced-search-item.selected {
+    background: ;
+    /* 如果 selection-background 太深（在某些黑色主题下），可能需要调整文字颜色，但通常 TW 会配对好 */
+}.advanced-search-item-header {
+    padding: 12px 16px;
+}.advanced-search-item-title {
+    font-weight: 600;
+    color: #182955;
+    margin-bottom: 6px;
+    font-size: 14px;
+}.advanced-search-item-meta {
+    font-size: 11px;
+    color: #bbbbbb;
+    float: right;
+    margin-left: 8px;
+}.advanced-search-item-preview {
+    font-size: 13px;
+    color: #333333;
+    opacity: 0.8;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}.search-highlight {
+    background: #ffff00;  /* TW default highlight color */
+    color: #000000;
+    font-weight: 600;
+    padding: 0 2px;
+    border-radius: 2px;
+}/* Fallback if highlight-background is missing/bad in some palettes, force readable check? 
+   No, trust the palette. Usually yellow in light, maybe something else in dark. */.advanced-search-empty {
+    padding: 40px 16px;
+    text-align: center;
+    color: #bbbbbb;
+}/* 打开tiddler后的高亮样式 - 这里可能需要硬编码一些鲜艳的颜色，或者使用 dirty-indicator 等醒目色 */
+.search-target-highlight {
+    background: transparent !important;
+    color: inherit !important;
+    padding: 0;
+    border-radius: 2px;
+    outline: 2px solid #ff0000; /* Usually red/orange, very visible */
+    box-shadow: 0 0 4px #ff0000;
+}.search-target-highlight.fade-out {
+    background: transparent !important;
+    color: inherit !important;
+    outline-color: transparent;
+    box-shadow: none;
+    transition: all 1s ease;
+}
+/* 代码块 */
 .tc-code-wrapper {
   position: relative;
   margin: 1em 0;& > pre {
@@ -3024,14 +3120,14 @@ background-image: -ms-linear-gradient(left, rgba(0,0,0,0.05) 0%, rgba(255,255,25
 <body class="tc-body">
 
 <section class="tc-story-river tc-static-story-river">
-<a name="D:\byp\repositories\tiddlywiki-plugins\demo\tiddlers\$__StoryList_1.tid">
-<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists " data-tags="" data-tiddler-title="D:\byp\repositories\tiddlywiki-plugins\demo\tiddlers\$__StoryList_1.tid" role="article"><div class="tc-tiddler-title tc-clearfix"><div class="tc-titlebar"><span class="tc-tiddler-controls"><button aria-expanded="false" aria-label="more" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fmore-tiddler-actions" title="More actions"></button><span class=" tc-reveal" hidden="true"></span><button aria-label="Edit this tiddler" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fedit" title="Edit this tiddler"></button><button aria-label="close" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fclose" title="Close this tiddler"></button></span><span><h2 class="tc-title">D:\byp\repositories\tiddlywiki-plugins\demo\tiddlers\$__StoryList_1.tid</h2></span></div><div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div></div><div class="tc-reveal"></div><div class=" tc-reveal"><div class="tc-subtitle tc-clearfix"></div></div><div class=" tc-reveal"><div class="tc-tags-wrapper"></div></div><div class="tc-tiddler-body tc-clearfix tc-reveal"></div>
+<a name="/Users/byp/Desktop/byp/repositories/tiddlywiki-plugins/demo/tiddlers/$__StoryList_1.tid">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists " data-tags="" data-tiddler-title="/Users/byp/Desktop/byp/repositories/tiddlywiki-plugins/demo/tiddlers/$__StoryList_1.tid" role="article"><div class="tc-tiddler-title tc-clearfix"><div class="tc-titlebar"><span class="tc-tiddler-controls"><button aria-expanded="false" aria-label="more" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fmore-tiddler-actions" title="More actions"></button><span class=" tc-reveal" hidden="true"></span><button aria-label="Edit this tiddler" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fedit" title="Edit this tiddler"></button><button aria-label="close" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fclose" title="Close this tiddler"></button></span><span><h2 class="tc-title">/Users/byp/Desktop/byp/repositories/tiddlywiki-plugins/demo/tiddlers/$__StoryList_1.tid</h2></span></div><div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div></div><div class="tc-reveal"></div><div class=" tc-reveal"><div class="tc-subtitle tc-clearfix"></div></div><div class=" tc-reveal"><div class="tc-tags-wrapper"></div></div><div class="tc-tiddler-body tc-clearfix tc-reveal"></div>
 </div>
-</a><a name="D:\byp\repositories\tiddlywiki-plugins\demo\tiddlers\$__StoryList.tid">
-<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists " data-tags="" data-tiddler-title="D:\byp\repositories\tiddlywiki-plugins\demo\tiddlers\$__StoryList.tid" role="article"><div class="tc-tiddler-title tc-clearfix"><div class="tc-titlebar"><span class="tc-tiddler-controls"><button aria-expanded="false" aria-label="more" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fmore-tiddler-actions" title="More actions"></button><span class=" tc-reveal" hidden="true"></span><button aria-label="Edit this tiddler" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fedit" title="Edit this tiddler"></button><button aria-label="close" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fclose" title="Close this tiddler"></button></span><span><h2 class="tc-title">D:\byp\repositories\tiddlywiki-plugins\demo\tiddlers\$__StoryList.tid</h2></span></div><div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div></div><div class="tc-reveal"></div><div class=" tc-reveal"><div class="tc-subtitle tc-clearfix"></div></div><div class=" tc-reveal"><div class="tc-tags-wrapper"></div></div><div class="tc-tiddler-body tc-clearfix tc-reveal"></div>
+</a><a name="/Users/byp/Desktop/byp/repositories/tiddlywiki-plugins/demo/tiddlers/$__StoryList.tid">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists " data-tags="" data-tiddler-title="/Users/byp/Desktop/byp/repositories/tiddlywiki-plugins/demo/tiddlers/$__StoryList.tid" role="article"><div class="tc-tiddler-title tc-clearfix"><div class="tc-titlebar"><span class="tc-tiddler-controls"><button aria-expanded="false" aria-label="more" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fmore-tiddler-actions" title="More actions"></button><span class=" tc-reveal" hidden="true"></span><button aria-label="Edit this tiddler" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fedit" title="Edit this tiddler"></button><button aria-label="close" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fclose" title="Close this tiddler"></button></span><span><h2 class="tc-title">/Users/byp/Desktop/byp/repositories/tiddlywiki-plugins/demo/tiddlers/$__StoryList.tid</h2></span></div><div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div></div><div class="tc-reveal"></div><div class=" tc-reveal"><div class="tc-subtitle tc-clearfix"></div></div><div class=" tc-reveal"><div class="tc-tags-wrapper"></div></div><div class="tc-tiddler-body tc-clearfix tc-reveal"></div>
 </div>
 </a><a name="Plugins">
-<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists " data-tags="" data-tiddler-title="Plugins" role="article"><div class="tc-tiddler-title tc-clearfix"><div class="tc-titlebar"><span class="tc-tiddler-controls"><button aria-expanded="false" aria-label="more" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fmore-tiddler-actions" title="More actions"></button><span class=" tc-reveal" hidden="true"></span><button aria-label="Edit this tiddler" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fedit" title="Edit this tiddler"></button><button aria-label="close" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fclose" title="Close this tiddler"></button></span><span><h2 class="tc-title">Plugins</h2></span></div><div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div></div><div class="tc-reveal"></div><div class=" tc-reveal"><div class="tc-subtitle tc-clearfix">27th December 2025 at 7:17pm</div></div><div class=" tc-reveal"><div class="tc-tags-wrapper"></div></div><div class="tc-tiddler-body tc-clearfix tc-reveal"><ul><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fcode-copy-button">$:/plugins/byper/code-copy-button</a></li><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fpublisher">$:/plugins/byper/publisher</a></li><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fimage-preview">$:/plugins/byper/image-preview</a></li></ul></div>
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists " data-tags="" data-tiddler-title="Plugins" role="article"><div class="tc-tiddler-title tc-clearfix"><div class="tc-titlebar"><span class="tc-tiddler-controls"><button aria-expanded="false" aria-label="more" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fmore-tiddler-actions" title="More actions"></button><span class=" tc-reveal" hidden="true"></span><button aria-label="Edit this tiddler" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fedit" title="Edit this tiddler"></button><button aria-label="close" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fclose" title="Close this tiddler"></button></span><span><h2 class="tc-title">Plugins</h2></span></div><div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div></div><div class="tc-reveal"></div><div class=" tc-reveal"><div class="tc-subtitle tc-clearfix">27th December 2025 at 7:17pm</div></div><div class=" tc-reveal"><div class="tc-tags-wrapper"></div></div><div class="tc-tiddler-body tc-clearfix tc-reveal"><p>Repository: <a class="tc-tiddlylink-external" href="https://github.com/b-yp/tiddlywiki-plugins" rel="noopener noreferrer" target="_blank">https://github.com/b-yp/tiddlywiki-plugins</a></p><hr><ul><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fcode-copy-button">$:/plugins/byper/code-copy-button</a></li><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fpublisher">$:/plugins/byper/publisher</a></li><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fimage-preview">$:/plugins/byper/image-preview</a></li><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fadvanced-search">$:/plugins/byper/advanced-search</a></li></ul></div>
 </div>
 </a>
 </section>

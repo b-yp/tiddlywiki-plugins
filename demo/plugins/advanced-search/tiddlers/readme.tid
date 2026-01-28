@@ -1,0 +1,52 @@
+title: $:/plugins/byper/advanced-search/readme
+type: text/vnd.tiddlywiki
+
+! Advanced Search
+
+An enhanced search plugin for TiddlyWiki that provides an IDE-like code search experience.
+
+!! ✨ Features
+
+* **Quick Access**: Press `Ctrl + K` (Mac: `Cmd + K`) to immediately open the search modal.
+* **Block-Based Search**: Matches not just titles but splits content by paragraphs (blocks), precisely showing the specific block containing the keyword.
+* **Multi-Instance Highlighting**: Highlights **all** occurrences of the keyword within the preview block, not just the first one.
+* **Smart Navigation**:
+    * Automatically opens and scrolls to the target position upon clicking a result.
+    * **Fast Smooth Scroll**: Uses a custom smooth scrolling algorithm (150ms) for a navigation experience that feels snappier than the browser default.
+    * **Stable Highlighting**: Highlight styles do not affect layout size, preventing text layout shifts (jumping) when they appear or disappear.
+    * **Auto Cleanup**: Automatically clears old highlights when navigating to a new result to keep the page clean.
+* **Real-time Preview**: Shows results in real-time as you type, sorted by modification date.
+* **Keyboard Navigation**: Supports `↑` `↓` to select results and `Enter` to open.
+
+!! 🚀 Usage
+
+1. Install the plugin and restart TiddlyWiki.
+2. Use `Ctrl + K` (Windows/Linux) or `Cmd + K` (macOS) to open the search box.
+3. Type keywords to browse matching results.
+4. Click an item or press Enter to jump to the result.
+
+---
+
+! 高级搜索 (Advanced Search)
+
+一个增强版的 TiddlyWiki 搜索插件，提供类似 IDE 的代码搜索体验。
+
+!! ✨ 特性
+
+* **快捷键唤起**：按下 `Ctrl + K` (Mac: `Cmd + K`) 快速打开搜索框。
+* **分块检索**：不仅匹配标题，还会将内容按段落（空行分隔）拆分，精确展示包含关键词的段落。
+* **多重高亮**：预览中会高亮该段落内**所有**出现的关键词，而不仅仅是第一个。
+* **智能导航**：
+    * 点击结果自动打开并滚动到目标位置。
+    * **快速平滑滚动**：使用自定义的平滑滚动算法（150ms），比浏览器默认滚动更快捷干脆。
+    * **防抖动高亮**：高亮样式不占用布局空间，消失时不会引起文字排版跳动。
+    * **自动清理**：新的高亮会自动清除旧的高亮，防止页面混乱。
+* **实时预览**：输入时实时显示结果，按修改时间排序。
+* **键盘操作**：支持 `↑` `↓` 选择结果， `Enter` 打开。
+
+!! 🚀 使用指南
+
+1. 安装插件后重启 TiddlyWiki。
+2. 使用快捷键 `Ctrl + K` (Windows/Linux) 或 `Cmd + K` (macOS) 打开搜索框。
+3. 输入关键词，浏览匹配结果。
+4. 点击条目或按回车跳转。
