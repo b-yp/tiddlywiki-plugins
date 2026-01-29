@@ -558,5 +558,15 @@ module-type: startup
         openModal();
       }
     });
+
+    // 监听 tm-open-advanced-search 消息 (支持按钮调用)
+    const registerMessage = () => {
+      if ($tw.rootWidget) {
+        $tw.rootWidget.addEventListener("tm-open-advanced-search", openModal);
+      } else {
+        setTimeout(registerMessage, 100);
+      }
+    };
+    registerMessage();
   };
 })();
