@@ -69,6 +69,16 @@ module-type: startup
       return overlay;
     };
 
+    // 显示空状态/提示信息 (替代 innerHTML)
+    const showEmptyState = (text) => {
+      if (!resultsContainer) return;
+      resultsContainer.replaceChildren();
+      const div = document.createElement("div");
+      div.className = "advanced-search-empty";
+      div.textContent = text;
+      resultsContainer.appendChild(div);
+    };
+
     // 创建高亮的DOM节点 (替代 innerHTML)
     const createHighlightedNodes = (text, keyword) => {
       const fragment = document.createDocumentFragment();
@@ -126,8 +136,7 @@ module-type: startup
       selectedIndex = -1;
 
       if (!keyword) {
-        resultsContainer.innerHTML =
-          '<div class="advanced-search-empty">Type to start searching</div>';
+        showEmptyState("Type to start searching");
         currentResults = [];
         return;
       }
@@ -189,8 +198,7 @@ module-type: startup
       currentResults = results;
 
       if (currentResults.length === 0) {
-        resultsContainer.innerHTML =
-          '<div class="advanced-search-empty">No matches found</div>';
+        showEmptyState("No matches found");
         return;
       }
 
@@ -199,7 +207,7 @@ module-type: startup
 
     // 渲染结果
     const renderResults = (keyword) => {
-      resultsContainer.innerHTML = "";
+      resultsContainer.replaceChildren();
 
       currentResults.forEach((result, index) => {
         const item = document.createElement("div");
@@ -540,8 +548,7 @@ module-type: startup
       input.focus();
       selectedIndex = -1;
       currentResults = [];
-      resultsContainer.innerHTML =
-        '<div class="advanced-search-empty">Type to start searching</div>';
+      showEmptyState("Type to start searching");
     };
 
     // 关闭弹窗
