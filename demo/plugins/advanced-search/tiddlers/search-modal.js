@@ -43,7 +43,7 @@ module-type: startup
 
       input = document.createElement("input");
       input.className = "advanced-search-input";
-      input.placeholder = "搜索 tiddlers...";
+      input.placeholder = "Search tiddlers...";
       input.type = "text";
 
       resultsContainer = document.createElement("div");
@@ -127,7 +127,7 @@ module-type: startup
 
       if (!keyword) {
         resultsContainer.innerHTML =
-          '<div class="advanced-search-empty">输入关键词开始搜索</div>';
+          '<div class="advanced-search-empty">Type to start searching</div>';
         currentResults = [];
         return;
       }
@@ -149,7 +149,7 @@ module-type: startup
             type: "title",
             title: title,
             modified: tiddler.fields.modified,
-            text: "标题匹配",
+            text: "Title Match",
             matchIndices: [], // 标题匹配不高亮内容
           });
         }
@@ -190,7 +190,7 @@ module-type: startup
 
       if (currentResults.length === 0) {
         resultsContainer.innerHTML =
-          '<div class="advanced-search-empty">未找到匹配结果</div>';
+          '<div class="advanced-search-empty">No matches found</div>';
         return;
       }
 
@@ -541,7 +541,7 @@ module-type: startup
       selectedIndex = -1;
       currentResults = [];
       resultsContainer.innerHTML =
-        '<div class="advanced-search-empty">输入关键词开始搜索</div>';
+        '<div class="advanced-search-empty">Type to start searching</div>';
     };
 
     // 关闭弹窗
