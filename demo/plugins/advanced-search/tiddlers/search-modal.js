@@ -69,14 +69,38 @@ module-type: startup
       return overlay;
     };
 
-    // 高亮文本所有匹配
-    const highlightAll = (text, keyword) => {
-      if (!keyword || !text) return text;
+    // 创建高亮的DOM节点 (替代 innerHTML)
+    const createHighlightedNodes = (text, keyword) => {
+      const fragment = document.createDocumentFragment();
+
+      if (!text) return fragment;
+
+      if (!keyword) {
+        fragment.textContent = text;
+        return fragment;
+      }
+
       const regex = new RegExp(
         `(${keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
-        "gi"
+        "gi",
       );
-      return text.replace(regex, '<span class="search-highlight">$1</span>');
+
+      const parts = text.split(regex);
+
+      parts.forEach((part, index) => {
+        if (index % 2 === 1) {
+          // 匹配的部分
+          const span = document.createElement("span");
+          span.className = "search-highlight";
+          span.textContent = part;
+          fragment.appendChild(span);
+        } else if (part) {
+          // 普通文本部分
+          fragment.appendChild(document.createTextNode(part));
+        }
+      });
+
+      return fragment;
     };
 
     // 统计字符串中关键词出现的次数
@@ -193,7 +217,7 @@ module-type: startup
         if (result.modified) {
           metaSpan.textContent = $tw.utils.formatDateString(
             result.modified,
-            "YYYY-MM-DD"
+            "YYYY-MM-DD",
           );
         }
 
@@ -201,7 +225,7 @@ module-type: startup
         titleSpan.className = "advanced-search-item-title";
         // 如果是标题匹配,高亮标题
         if (result.type === "title") {
-          titleSpan.innerHTML = highlightAll(result.title, keyword);
+          titleSpan.appendChild(createHighlightedNodes(result.title, keyword));
         } else {
           titleSpan.textContent = result.title;
         }
@@ -220,7 +244,7 @@ module-type: startup
             (previewText.length > 100 ? "..." : "");
         } else {
           // 内容匹配,高亮所有关键词
-          previewDiv.innerHTML = highlightAll(result.text, keyword);
+          previewDiv.appendChild(createHighlightedNodes(result.text, keyword));
         }
 
         header.appendChild(titleRow);
@@ -274,7 +298,12 @@ module-type: startup
 
     // 在tiddler中高亮并滚动到关键词
     // needsNavigation: 如果是刚打开/展开的tiddler，可能需要更长的延迟来等待TW的滚动完成
-    const highlightAndScrollInTiddler = (title, keyword, matchIndices, needsNavigation) => {
+    const highlightAndScrollInTiddler = (
+      title,
+      keyword,
+      matchIndices,
+      needsNavigation,
+    ) => {
       // 每次开始高亮前，先清理之前的
       clearExistingHighlights();
 
@@ -306,7 +335,7 @@ module-type: startup
           contentArea,
           NodeFilter.SHOW_TEXT,
           null,
-          false
+          false,
         );
 
         const allMatches = [];
@@ -396,9 +425,11 @@ module-type: startup
         });
 
         if (firstHighlight) {
-
           const doScroll = () => {
-            firstHighlight.scrollIntoView({ behavior: "smooth", block: "center" });
+            firstHighlight.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
           };
 
           if (needsNavigation) {
@@ -410,14 +441,14 @@ module-type: startup
           // 淡化逻辑
           fadeOutTimer = setTimeout(() => {
             const highlights = document.querySelectorAll(
-              ".search-target-highlight"
+              ".search-target-highlight",
             );
             highlights.forEach((h) => h.classList.add("fade-out"));
 
             removeTimer = setTimeout(() => {
               // 移除高亮
               const highlights = document.querySelectorAll(
-                ".search-target-highlight"
+                ".search-target-highlight",
               );
               highlights.forEach((el) => {
                 const parent = el.parentNode;
@@ -453,7 +484,12 @@ module-type: startup
         story.navigateTiddler(title);
       }
 
-      highlightAndScrollInTiddler(title, keyword, matchIndices, needsNavigation);
+      highlightAndScrollInTiddler(
+        title,
+        keyword,
+        matchIndices,
+        needsNavigation,
+      );
     };
 
     // 键盘导航
@@ -487,7 +523,7 @@ module-type: startup
 
     const scrollToSelected = () => {
       const selected = resultsContainer.querySelector(
-        `.advanced-search-item[data-index="${selectedIndex}"]`
+        `.advanced-search-item[data-index="${selectedIndex}"]`,
       );
       if (selected) {
         selected.scrollIntoView({ block: "nearest", behavior: "smooth" });
