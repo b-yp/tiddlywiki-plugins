@@ -1,60 +1,86 @@
 title: $:/plugins/byper/image-preview/readme
 type: text/vnd.tiddlywiki
 
-! Image Preview Plugin
+! Image Preview
 
-Adds click-to-enlarge preview functionality for images in TiddlyWiki using native JavaScript (no external dependencies).
+A native image preview plugin for TiddlyWiki that adds click-to-enlarge functionality for images.
 
-!! Features
+!! ✨ Features
 
-* Click any image to open a full-screen preview
-* Zoom in/out and reset zoom functionality
-* Navigation between multiple images on the same page
-* Keyboard shortcuts (arrows, ESC, Ctrl+/-)
-* Works with dynamically loaded images
-* No external dependencies - pure JavaScript/CSS
+* **Quick Preview**: Click any image to open a full-screen preview modal.
+* **Zoom Controls**: Support for zooming in/out and resetting zoom level.
+* **Navigation**: Seamlessly navigate between multiple images on the same page.
+* **Keyboard Shortcuts**: Full keyboard support (Arrows, ESC, Ctrl+/-) for efficiency.
+* **Universal Support**: Works with dynamically loaded images and requires no external dependencies.
+* **Pure Native**: Built with pure JavaScript and CSS, lightweight and fast.
 
-!! Usage
+!! 🚀 Usage
 
-After installing the plugin, all images will automatically have preview functionality.
-
-Click on any image to open the preview modal. Use the control buttons or keyboard shortcuts to interact with the image.
+1. Install the plugin.
+2. Click on any image in your TiddlyWiki to open the preview modal.
+3. Use the on-screen controls or keyboard shortcuts to interact.
 
 [img[https://imgbed.baiyapeng.cc/file/1731898035292_avatar.jpg]]
 
 [img[https://imgbed.baiyapeng.cc/file/1766820604037_bingimg_20251221_UHD.jpg]]
 
-!! Keyboard Shortcuts
+!! ⌨️ Keyboard Shortcuts
 
 |! Key |! Action |
 | ESC | Close preview |
 | ← → | Previous/next image |
 | Ctrl + + / Ctrl + - | Zoom in/out |
 | Ctrl + 0 | Reset zoom to 100% |
-| Click outside image | Close preview |
 | Mouse wheel | Zoom in/out |
 
-!! Controls
+!! 🛠 Customization
 
-* **×** (top right) - Close preview
-* **❮** **❯** (left/right) - Navigate between images
-* **−** **+** (bottom center) - Zoom out/in
-* **↺** (bottom center) - Reset zoom
+You can customize the plugin behavior (such as CSS styles or scaling limits) by modifying the `script.js` file.
 
-!! Customization
+---
 
-You can customize the plugin behavior by modifying the plugin's script.js file (CSS, scaling limits, etc.).
+! 图片预览 (Image Preview)
 
-!! Version History
+一个为 TiddlyWiki 打造的原生图片预览插件，提供点击放大、缩放和导航功能。
+
+!! ✨ 特性
+
+* **快速预览**：点击任意图片即可打开全屏预览模态框。
+* **缩放控制**：支持放大、缩小以及一键重置缩放比例。
+* **图片导航**：支持在当前页面的多张图片之间流畅切换。
+* **快捷键支持**：提供完整的键盘快捷键支持（方向键、ESC、Ctrl+/-），操作更高效。
+* **广泛支持**：支持动态加载的图片，且无任何外部依赖。
+* **纯原生实现**：仅使用原生 JavaScript 和 CSS 构建，轻量且高效。
+
+!! 🚀 使用指南
+
+1. 安装插件。
+2. 点击 TiddlyWiki 中的任意图片即可打开预览。
+3. 使用屏幕上的控制按钮或键盘快捷键进行交互。
+
+!! ⌨️ 键盘快捷键
+
+|! 按键 |! 动作 |
+| ESC | 关闭预览 |
+| ← → | 上一张/下一张图片 |
+| Ctrl + + / Ctrl + - | 放大/缩小 |
+| Ctrl + 0 | 重置缩放 |
+| 鼠标滚轮 | 放大/缩小 |
+
+!! 🛠 自定义
+
+您可以通过修改 `script.js` 文件来自定义插件行为（例如 CSS 样式或缩放限制等）。
+
+!! 📝 Version History / 版本历史
 
 |! Version |! Date |! Changes |
-| 1.1.0 | 2025-12-25 | Rewritten with native JavaScript (no ViewerJS dependency) |
-| 1.0.0 | 2025-12-25 | Initial version with ViewerJS (deprecated) |
+| 1.1.0 | 2025-12-25 | Rewritten with native JavaScript (no ViewerJS dependency) / 使用原生 JS 重写（移除 ViewerJS 依赖） |
+| 1.0.0 | 2025-12-25 | Initial version with ViewerJS (deprecated) / 初始版本（基于 ViewerJS，已弃用） |
 
-!! Author
+!! 👤 Author / 作者
 
 [[Byper|https://github.com/b-yp]] - [[TiddlyWiki Plugins|https://github.com/b-yp/tiddlywiki-plugins]]
 
-!! License
+!! 📄 License
 
 MIT License
