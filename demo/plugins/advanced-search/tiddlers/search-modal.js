@@ -22,8 +22,12 @@ module-type: startup
     let modal = null;
     let input = null;
     let resultsContainer = null;
-    let selectedIndex = -1;
-    let currentResults = [];
+
+    // selectedIndex 现在是一个对象 { groupIndex: number, matchIndex: number }
+    // matchIndex = -1 代表选中了 Group Header
+    let selection = { groupIndex: -1, matchIndex: -1 };
+
+    let currentResults = []; // Array of Group Objects
     let currentKeyword = "";
 
     // 全局定时器变量，防止冲突
@@ -113,27 +117,32 @@ module-type: startup
       return fragment;
     };
 
-    // 统计字符串中关键词出现的次数
-    const countMatches = (text, keyword) => {
-      if (!text || !keyword) return 0;
-      let count = 0;
+    // 获取所有匹配的索引
+    const getMatchIndices = (text, keyword) => {
+      if (!text || !keyword) return [];
+      const indices = [];
       let pos = 0;
       const lowerText = text.toLowerCase();
       const lowerKeyword = keyword.toLowerCase();
       while (true) {
         const found = lowerText.indexOf(lowerKeyword, pos);
         if (found === -1) break;
-        count++;
+        indices.push(found);
         pos = found + 1;
       }
-      return count;
+      return indices;
+    };
+
+    // 辅助：清理文本用于比较 (移除非字母数字字符)
+    const cleanText = (text) => {
+      return text.replace(/[\W_]+/g, "").toLowerCase();
     };
 
     // 搜索
     const handleSearch = () => {
       const keyword = input.value.trim();
       currentKeyword = keyword;
-      selectedIndex = -1;
+      selection = { groupIndex: -1, matchIndex: -1 };
 
       if (!keyword) {
         showEmptyState("Type to start searching");
@@ -141,7 +150,7 @@ module-type: startup
         return;
       }
 
-      const results = [];
+      const groups = [];
 
       $tw.wiki.each((tiddler, title) => {
         // 跳过系统tiddler
@@ -150,122 +159,213 @@ module-type: startup
         const text = tiddler.fields.text || "";
         const titleLower = title.toLowerCase();
         const keywordLower = keyword.toLowerCase();
+
         const titleMatched = titleLower.indexOf(keywordLower) !== -1;
 
-        // 如果标题匹配,作为一个单独的结果项
+        // 存储当前tiddler的所有匹配项
+        const matches = [];
+
+        // 1. 标题匹配
         if (titleMatched) {
-          results.push({
-            type: "title",
-            title: title,
-            modified: tiddler.fields.modified,
-            text: "Title Match",
-            matchIndices: [], // 标题匹配不高亮内容
-          });
+          // 标题匹配作为一个特殊的 Match Item
         }
 
-        // 内容匹配 - 按段落分组 separated by double newlines
+        // 2. 内容匹配 - 按段落分组 separated by double newlines
         const blocks = text.split(/\n\n+/);
-        let globalMatchIndex = 0;
 
         blocks.forEach((blockText) => {
-          // 计算当前段落中的匹配数
-          const matchesInBlock = countMatches(blockText, keyword);
+          const indices = getMatchIndices(blockText, keyword);
 
-          if (matchesInBlock > 0) {
-            // 生成当前这段中所有匹配的全局索引
-            const currentBlockIndices = [];
-            for (let i = 0; i < matchesInBlock; i++) {
-              currentBlockIndices.push(globalMatchIndex + i);
-            }
+          if (indices.length > 0) {
+            // 生成上下文 (Contexts)
+            // UPDATE: 使用完整的 blockText 作为上下文，以便进行更严格的匹配 (Length check)
+            const contexts = [blockText];
 
-            results.push({
+            matches.push({
               type: "content",
-              title: title,
-              modified: tiddler.fields.modified,
               text: blockText,
-              matchIndices: currentBlockIndices,
+              contexts: contexts, // Store full block text
             });
           }
-
-          // 更新全局匹配计数
-          globalMatchIndex += matchesInBlock;
         });
+
+        // 如果标题匹配 OR 有内容匹配
+        if (titleMatched || matches.length > 0) {
+          groups.push({
+            title: title,
+            modified: tiddler.fields.modified,
+            matches: matches,
+            titleMatched: titleMatched,
+            expanded: true, // 默认展开
+          });
+        }
       });
 
       // 排序: 最新修改的在前
-      results.sort((a, b) => (b.modified || 0) - (a.modified || 0));
+      groups.sort((a, b) => (b.modified || 0) - (a.modified || 0));
 
-      currentResults = results;
+      currentResults = groups;
 
       if (currentResults.length === 0) {
         showEmptyState("No matches found");
         return;
       }
 
-      renderResults(keyword);
+      renderResults();
+    };
+
+    // 智能截取 - 确保关键词在预览可视区域内
+    const smartTruncate = (text, keyword) => {
+      const maxLength = 150; // 预览显示的最大字符数 roughly
+      if (text.length <= maxLength) return text;
+
+      const lowerText = text.toLowerCase();
+      const lowerKeyword = keyword.toLowerCase();
+      const index = lowerText.indexOf(lowerKeyword);
+
+      if (index === -1) return text.substring(0, maxLength) + "...";
+
+      // 如果关键词在开头附近
+      if (index < 50) {
+        return text.substring(0, maxLength) + "...";
+      }
+
+      // 关键词在中间或后面，需要截取
+      const start = Math.max(0, index - 30); // 保留关键词前30个字符
+      const end = Math.min(text.length, start + maxLength);
+
+      let prefix = "...";
+      if (start === 0) prefix = "";
+
+      let suffix = "...";
+      if (end >= text.length) suffix = "";
+
+      return prefix + text.substring(start, end) + suffix;
     };
 
     // 渲染结果
-    const renderResults = (keyword) => {
+    const renderResults = () => {
       resultsContainer.replaceChildren();
 
-      currentResults.forEach((result, index) => {
-        const item = document.createElement("div");
-        item.className = "advanced-search-item";
-        item.dataset.index = index;
+      currentResults.forEach((group, groupIndex) => {
+        const groupDiv = document.createElement("div");
+        groupDiv.className = "advanced-search-group";
+        if (!group.expanded) {
+          groupDiv.classList.add("collapsed");
+        }
 
+        // --- Header ---
         const header = document.createElement("div");
-        header.className = "advanced-search-item-header";
+        header.className = "advanced-search-group-header";
 
-        // 标题行
-        const titleRow = document.createElement("div");
-
-        const metaSpan = document.createElement("span");
-        metaSpan.className = "advanced-search-item-meta";
-        if (result.modified) {
-          metaSpan.textContent = $tw.utils.formatDateString(
-            result.modified,
-            "YYYY-MM-DD",
-          );
+        // 选中状态
+        if (
+          selection.groupIndex === groupIndex &&
+          selection.matchIndex === -1
+        ) {
+          header.classList.add("selected");
         }
 
-        const titleSpan = document.createElement("div");
-        titleSpan.className = "advanced-search-item-title";
-        // 如果是标题匹配,高亮标题
-        if (result.type === "title") {
-          titleSpan.appendChild(createHighlightedNodes(result.title, keyword));
-        } else {
-          titleSpan.textContent = result.title;
-        }
+        // Toggle Icon
+        const iconContainer = document.createElement("span");
+        iconContainer.className = "advanced-search-toggle-icon";
+        iconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path></svg>`;
 
-        titleRow.appendChild(metaSpan);
-        titleRow.appendChild(titleSpan);
-
-        // 内容预览
-        const previewDiv = document.createElement("div");
-        previewDiv.className = "advanced-search-item-preview";
-        if (result.type === "title") {
-          // 标题匹配时, 显示开头的一点文本作为上下文
-          const previewText = $tw.wiki.getTiddlerText(result.title) || "";
-          previewDiv.textContent =
-            previewText.substring(0, 100) +
-            (previewText.length > 100 ? "..." : "");
-        } else {
-          // 内容匹配,高亮所有关键词
-          previewDiv.appendChild(createHighlightedNodes(result.text, keyword));
-        }
-
-        header.appendChild(titleRow);
-        header.appendChild(previewDiv);
-        item.appendChild(header);
-
-        // 点击事件
-        item.addEventListener("click", (e) => {
-          e.stopPropagation();
-          openTiddlerWithHighlight(result.title, keyword, result.matchIndices);
+        // Icon click -> Toggle
+        iconContainer.addEventListener("click", (e) => {
+          e.stopPropagation(); // Prevent header click (open)
+          group.expanded = !group.expanded;
+          renderResults();
         });
 
-        resultsContainer.appendChild(item);
+        // Content Container (Title + Meta) -> Click to Open
+        const contentContainer = document.createElement("div");
+        contentContainer.className = "advanced-search-header-content";
+        contentContainer.style.flex = "1";
+        contentContainer.style.display = "flex";
+        contentContainer.style.alignItems = "center";
+
+        const titleSpan = document.createElement("span");
+        titleSpan.className = "advanced-search-group-title";
+        if (group.titleMatched) {
+          titleSpan.appendChild(
+            createHighlightedNodes(group.title, currentKeyword),
+          );
+        } else {
+          titleSpan.textContent = group.title;
+        }
+
+        const metaSpan = document.createElement("span");
+        metaSpan.className = "advanced-search-group-meta";
+        if (group.modified) {
+          const count = group.matches.length;
+          const date = $tw.utils.formatDateString(group.modified, "YYYY-MM-DD");
+          const countText =
+            count > 0 ? `${count} matches • ` : "Title match • ";
+          metaSpan.textContent = `${countText}${date}`;
+        }
+
+        contentContainer.appendChild(titleSpan);
+        contentContainer.appendChild(metaSpan);
+
+        // Header Content Click -> Open
+        header.addEventListener("click", (e) => {
+          openTiddlerWithHighlight(group.title, currentKeyword, []);
+        });
+
+        header.appendChild(iconContainer);
+        header.appendChild(contentContainer);
+
+        groupDiv.appendChild(header);
+
+        // --- Body (Matches) ---
+        const body = document.createElement("div");
+        body.className = "advanced-search-group-body";
+
+        // ONLY render matches if expanded
+        if (group.expanded) {
+          group.matches.forEach((match, matchIndex) => {
+            const item = document.createElement("div");
+            item.className = "advanced-search-match-item";
+
+            // 选中状态
+            if (
+              selection.groupIndex === groupIndex &&
+              selection.matchIndex === matchIndex
+            ) {
+              item.classList.add("selected");
+            }
+
+            const previewDiv = document.createElement("div");
+            // CSS Truncation is still useful for safety, but we pre-truncate text now
+            previewDiv.style.display = "-webkit-box";
+            previewDiv.style.webkitLineClamp = "3";
+            previewDiv.style.webkitBoxOrient = "vertical";
+            previewDiv.style.overflow = "hidden";
+
+            // FIX: Use smartTruncate to aim at the keyword
+            const snippet = smartTruncate(match.text, currentKeyword);
+
+            previewDiv.appendChild(
+              createHighlightedNodes(snippet, currentKeyword),
+            );
+            item.appendChild(previewDiv);
+
+            item.addEventListener("click", (e) => {
+              e.stopPropagation();
+              openTiddlerWithHighlight(
+                group.title,
+                currentKeyword,
+                match.contexts, // Pass contexts!
+              );
+            });
+
+            body.appendChild(item);
+          });
+        }
+
+        groupDiv.appendChild(body);
+        resultsContainer.appendChild(groupDiv);
       });
     };
 
@@ -305,17 +405,16 @@ module-type: startup
     };
 
     // 在tiddler中高亮并滚动到关键词
-    // needsNavigation: 如果是刚打开/展开的tiddler，可能需要更长的延迟来等待TW的滚动完成
     const highlightAndScrollInTiddler = (
       title,
       keyword,
-      matchIndices,
+      matchContexts, // Array of context strings
       needsNavigation,
     ) => {
       // 每次开始高亮前，先清理之前的
       clearExistingHighlights();
 
-      if (!keyword || !matchIndices || matchIndices.length === 0) return;
+      if (!keyword) return;
 
       let attempt = 0;
       const maxAttempts = 30; // 3秒超时
@@ -334,9 +433,6 @@ module-type: startup
 
         // 找到了Frame, 尝试获取内容区域
         let contentArea = targetFrame.querySelector(".tc-tiddler-body");
-
-        // 如果没有内容区域(还在展开动画中?)，也视为还没准备好，除非它是非文本tiddler
-        // 但简单起见，我们先尝试获取
         if (!contentArea) contentArea = targetFrame;
 
         const walker = document.createTreeWalker(
@@ -353,7 +449,7 @@ module-type: startup
             node.parentElement &&
             (node.parentElement.tagName === "SCRIPT" ||
               node.parentElement.tagName === "STYLE" ||
-              node.parentElement.classList.contains("search-target-highlight")) // 防止重复高亮
+              node.parentElement.classList.contains("search-target-highlight"))
           ) {
             continue;
           }
@@ -366,16 +462,30 @@ module-type: startup
           while (pos < text.length) {
             const index = lowerText.indexOf(lowerKeyword, pos);
             if (index === -1) break;
+
+            // Extract DOM context for verification
+            // FIX: node.nodeValue is too short. Use parent block text.
+            let contextSource = text; // Default fallback
+            const parentBlock = node.parentElement.closest(
+              "p, div, li, h1, h2, h3, h4, h5, h6, blockquote, pre",
+            );
+            if (parentBlock) {
+              // If we found a block parent, use its text content which is much richer
+              contextSource = parentBlock.textContent;
+            } else if (node.parentElement) {
+              contextSource = node.parentElement.textContent;
+            }
+
             allMatches.push({
               node: node,
               index: index,
               length: keyword.length,
+              context: contextSource, // Use the full block text as context
             });
             pos = index + 1;
           }
         }
 
-        // 如果内容是空的或者没找到匹配(可能是异步渲染/Transclusion)，再稍微等等
         if (allMatches.length === 0) {
           if (attempt < maxAttempts) {
             attempt++;
@@ -385,13 +495,46 @@ module-type: startup
           return;
         }
 
-        // 收集此次点击需要高亮的匹配项
-        const targets = [];
-        matchIndices.forEach((idx) => {
-          if (idx < allMatches.length) {
-            targets.push(allMatches[idx]);
+        // Filter Matches using Context
+        let targets = [];
+        if (!matchContexts || matchContexts.length === 0) {
+          // If no context provided (e.g. title click), maybe highlight first match?
+          // Or highlight nothing? Let's highlight first for fallback.
+          if (allMatches.length > 0) targets.push(allMatches[0]);
+        } else {
+          // Fuzzier matching: Check if cleaned contexts match
+          const cleanContexts = matchContexts.map(cleanText);
+
+          targets = allMatches.filter((domMatch) => {
+            const cleanDom = cleanText(domMatch.context);
+            if (!cleanDom) return false;
+
+            // Check if ANY of the provided contexts match this DOM element strictly.
+            // We use a combination of Inclusion + Length Check to prevent Header/Paragraph confusion.
+            return cleanContexts.some((cleanCtx) => {
+              if (!cleanCtx) return false;
+
+              const lenA = cleanDom.length;
+              const lenB = cleanCtx.length;
+
+              // 长度差异不能太大 (e.g. < 20% or < 20 chars difference)
+              // This filters out "Header inside Paragraph" (Para is much longer)
+              const diffProps = Math.abs(lenA - lenB) / Math.max(lenA, lenB);
+
+              // 允许 30% 的长度差异 (考虑到 wiki 语法被渲染成 html 后可能会变短)
+              if (diffProps > 0.3) return false;
+
+              // 内容包含检查
+              return cleanCtx.includes(cleanDom) || cleanDom.includes(cleanCtx);
+            });
+          });
+
+          // If strict filtering failed completely, fallback to first match?
+          // User said "found two, highlighted zero". Better to highlight something.
+          if (targets.length === 0 && allMatches.length > 0) {
+            targets.push(allMatches[0]);
           }
-        });
+        }
 
         // 按 Node 分组
         const matchesByNode = new Map();
@@ -425,7 +568,8 @@ module-type: startup
 
               parent.replaceChild(span, matchNode);
 
-              firstHighlight = span;
+              // 记录第一个高亮用于滚动
+              if (!firstHighlight) firstHighlight = span;
             } catch (e) {
               console.error("Error highlighting", e);
             }
@@ -478,7 +622,7 @@ module-type: startup
       tryHighlight();
     };
 
-    const openTiddlerWithHighlight = (title, keyword, matchIndices = []) => {
+    const openTiddlerWithHighlight = (title, keyword, matchContexts = []) => {
       closeModal();
 
       // 检查Tiddler是否已经打开且展开
@@ -495,7 +639,7 @@ module-type: startup
       highlightAndScrollInTiddler(
         title,
         keyword,
-        matchIndices,
+        matchContexts,
         needsNavigation,
       );
     };
@@ -512,27 +656,109 @@ module-type: startup
 
       if (e.key === "ArrowDown") {
         e.preventDefault();
-        selectedIndex = Math.min(selectedIndex + 1, currentResults.length - 1);
-        renderResults(currentKeyword);
-        scrollToSelected();
+        navigateSelection(1);
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        selectedIndex = Math.max(selectedIndex - 1, 0);
-        renderResults(currentKeyword);
-        scrollToSelected();
+        navigateSelection(-1);
       } else if (e.key === "Enter") {
         e.preventDefault();
-        if (selectedIndex >= 0) {
-          const res = currentResults[selectedIndex];
-          openTiddlerWithHighlight(res.title, currentKeyword, res.matchIndices);
+        handleEnter();
+      } else if (e.key === "ArrowLeft") {
+        // Expand current group if header selected
+        if (selection.groupIndex !== -1 && selection.matchIndex === -1) {
+          e.preventDefault();
+          const group = currentResults[selection.groupIndex];
+          if (!group.expanded) {
+            group.expanded = true;
+            renderResults();
+            scrollToSelected();
+          }
+        }
+      } else if (e.key === "ArrowRight") {
+        // Collapse current group if header selected
+        if (selection.groupIndex !== -1 && selection.matchIndex === -1) {
+          e.preventDefault();
+          const group = currentResults[selection.groupIndex];
+          if (group.expanded) {
+            group.expanded = false;
+            renderResults();
+            scrollToSelected();
+          }
         }
       }
     };
 
+    const navigateSelection = (direction) => {
+      // Flat list abstraction for navigation
+      // We need to find the "next" or "previous" visible item
+      // Items are: Header (G, -1), matches (G, 0), (G, 1)...
+      // Note: if group is collapsed, matches are not visible.
+
+      // Find current flat index
+      let flatList = [];
+      currentResults.forEach((group, gIndex) => {
+        flatList.push({ gIndex, mIndex: -1 }); // Header
+        if (group.expanded) {
+          group.matches.forEach((_, mIndex) => {
+            flatList.push({ gIndex, mIndex });
+          });
+        }
+      });
+
+      let currentFlatIndex = -1;
+      // Check if selection is valid
+      if (selection.groupIndex !== -1) {
+        currentFlatIndex = flatList.findIndex(
+          (item) =>
+            item.gIndex === selection.groupIndex &&
+            item.mIndex === selection.matchIndex,
+        );
+      }
+
+      // If selection is invalid (e.g. collapsed group made current selection invisible),
+      // try to find the group header of the selected group?
+      if (currentFlatIndex === -1 && selection.groupIndex !== -1) {
+        // Fallback: select header of current group
+        currentFlatIndex = flatList.findIndex(
+          (item) => item.gIndex === selection.groupIndex && item.mIndex === -1,
+        );
+      }
+
+      let newFlatIndex = currentFlatIndex + direction;
+
+      // Boundaries
+      if (newFlatIndex < 0) newFlatIndex = 0;
+      if (newFlatIndex >= flatList.length) newFlatIndex = flatList.length - 1;
+
+      if (flatList.length > 0) {
+        const nextItem = flatList[newFlatIndex];
+        selection = {
+          groupIndex: nextItem.gIndex,
+          matchIndex: nextItem.mIndex,
+        };
+        renderResults();
+        scrollToSelected();
+      }
+    };
+
+    const handleEnter = () => {
+      if (selection.groupIndex === -1) return;
+
+      const group = currentResults[selection.groupIndex];
+
+      if (selection.matchIndex === -1) {
+        // Header selected -> Open Tiddler
+        // User said: "We also click title to jump to tiddler"
+        openTiddlerWithHighlight(group.title, currentKeyword, []);
+      } else {
+        // Match item selected
+        const match = group.matches[selection.matchIndex];
+        openTiddlerWithHighlight(group.title, currentKeyword, match.contexts);
+      }
+    };
+
     const scrollToSelected = () => {
-      const selected = resultsContainer.querySelector(
-        `.advanced-search-item[data-index="${selectedIndex}"]`,
-      );
+      const selected = resultsContainer.querySelector(".selected");
       if (selected) {
         selected.scrollIntoView({ block: "nearest", behavior: "smooth" });
       }
@@ -546,7 +772,7 @@ module-type: startup
       document.body.appendChild(overlay);
       input.value = "";
       input.focus();
-      selectedIndex = -1;
+      selection = { groupIndex: -1, matchIndex: -1 };
       currentResults = [];
       showEmptyState("Type to start searching");
     };

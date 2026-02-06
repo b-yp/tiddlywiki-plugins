@@ -2596,6 +2596,7 @@ a.tc-tiddlylink:hover {
     text-align: center;
     color: #bbbbbb;
 }/* 打开tiddler后的高亮样式 - 这里可能需要硬编码一些鲜艳的颜色，或者使用 dirty-indicator 等醒目色 */
+/* 打开tiddler后的高亮样式 */
 .search-target-highlight {
     background: transparent !important;
     color: inherit !important;
@@ -2609,8 +2610,76 @@ a.tc-tiddlylink:hover {
     outline-color: transparent;
     box-shadow: none;
     transition: all 1s ease;
-}
-/* 代码块 */
+}/* Grouped Results Styles */.advanced-search-group {
+    border-bottom: 1px solid #ffffff;
+}.advanced-search-group-header {
+    background: #f8f8f8;
+    padding: 10px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.1s;
+}.advanced-search-group-header:hover,
+.advanced-search-group-header.selected {
+    background: ;
+    background-color: rgba(0, 0, 0, 0.05); /* Fallback for visibility */
+}/* Ensure selected match item is also visible */
+.advanced-search-match-item:hover,
+.advanced-search-match-item.selected {
+    background: ;
+    background-color: rgba(0, 0, 0, 0.05); /* Fallback for visibility */
+}.advanced-search-group-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #182955;
+    flex: 1;
+}.advanced-search-group-meta {
+    font-size: 11px;
+    color: #bbbbbb;
+    margin-left: 10px;
+}.advanced-search-toggle-icon {
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
+    color: #bbbbbb;
+    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+}.advanced-search-toggle-icon svg {
+    width: 16px;
+    height: 16px;
+}.advanced-search-toggle-icon:hover {
+    background-color: rgba(0,0,0,0.1); 
+    color: #333333; 
+}.advanced-search-group.collapsed .advanced-search-toggle-icon {
+    transform: rotate(-90deg); /* Rotate to point right when collapsed */
+}.advanced-search-group:not(.collapsed) .advanced-search-toggle-icon {
+    transform: rotate(0deg); /* Point down (default SVG) when expanded */
+}.advanced-search-group-body {
+    display: block;
+    background: #ffffff;
+}.advanced-search-group.collapsed .advanced-search-group-body {
+    display: none;
+}.advanced-search-match-item {
+    padding: 8px 16px 8px 36px; /* Indent matches */
+    cursor: pointer;
+    border-top: 1px dashed #ffffff;
+    font-size: 13px;
+    color: #333333;
+    opacity: 0.9;
+    line-height: 1.5;
+    position: relative;
+    transition: background 0.1s;
+}.advanced-search-match-item:hover,
+.advanced-search-match-item.selected {
+    background: ;
+}.advanced-search-match-item:first-child {
+    border-top: none;
+}/* Type hint icon or label could involve here *//* 代码块 */
 .tc-code-wrapper {
   position: relative;
   margin: 1em 0;& > pre {
