@@ -1,0 +1,15 @@
+title: $:/plugins/byper/advanced-search/settings
+caption: Settings
+type: text/vnd.tiddlywiki
+
+! Settings
+
+Configure the behavior of the Advanced Search plugin.
+
+---
+
+!! Search Results Behavior
+
+<$checkbox tiddler="$:/config/byper/advanced-search/expand-context" field="text" checked="yes" unchecked="no" default="yes"> Expand result context by default</$checkbox>
+
+Check this box to automatically expand the context snippets for all search results. Uncheck it to show only titles initially.

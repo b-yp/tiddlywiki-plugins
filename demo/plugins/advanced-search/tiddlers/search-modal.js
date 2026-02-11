@@ -196,7 +196,11 @@ module-type: startup
             modified: tiddler.fields.modified,
             matches: matches,
             titleMatched: titleMatched,
-            expanded: true, // 默认展开
+            expanded:
+              $tw.wiki.getTiddlerText(
+                "$:/config/byper/advanced-search/expand-context",
+                "yes",
+              ) === "yes", // Read from config
           });
         }
       });

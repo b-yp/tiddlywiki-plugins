@@ -7,5 +7,5 @@
 	"core-version": ">=5.0.0",
 	"source": "https://github.com/b-yp/tiddlywiki-plugins",
 	"plugin-type": "plugin",
-	"list": "readme history"
+	"list": "readme settings history"
 }
