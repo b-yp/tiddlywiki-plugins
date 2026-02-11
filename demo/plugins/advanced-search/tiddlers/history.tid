@@ -1,0 +1,28 @@
+title: $:/plugins/byper/advanced-search/history
+caption: History
+type: text/vnd.tiddlywiki
+
+! History
+
+!! 2026-02-11
+
+* feat(advanced-search): add user setting to control default context expansion
+* fix(advanced-search): prioritize title matches in search results sorting
+** Prioritize results where the keyword appears in the title over content-only matches.
+** Maintain modification date as the secondary sort key.
+* docs(advanced-search): update history with detailed commit logs
+
+!! 2026-02-06
+
+* feat(advanced-search): refine highlighting logic and improve search result preview
+
+!! 2026-01-29
+
+* refactor(advanced-search): replace innerHTML with DOM API calls for security and performance
+* feat(advanced-search): localize search modal interface to English
+* feat(advanced-search): add sidebar trigger button
+* fix(advanced-search): prevent XSS by using DOM node construction for highlights
+
+!! 2026-01-28
+
+* feat(advanced-search): Added Advanced Search plugin

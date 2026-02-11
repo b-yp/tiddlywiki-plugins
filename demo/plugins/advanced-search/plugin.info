@@ -3,7 +3,7 @@
 	"name": "Advanced Search",
 	"description": "Advanced Search plugin for TiddlyWiki",
 	"author": "Byper",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"core-version": ">=5.0.0",
 	"source": "https://github.com/b-yp/tiddlywiki-plugins",
 	"plugin-type": "plugin",
