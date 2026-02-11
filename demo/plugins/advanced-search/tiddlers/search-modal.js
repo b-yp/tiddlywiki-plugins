@@ -201,8 +201,12 @@ module-type: startup
         }
       });
 
-      // 排序: 最新修改的在前
-      groups.sort((a, b) => (b.modified || 0) - (a.modified || 0));
+      // 排序: 标题匹配优先，然后是最新修改的
+      groups.sort((a, b) => {
+        if (a.titleMatched && !b.titleMatched) return -1;
+        if (!a.titleMatched && b.titleMatched) return 1;
+        return (b.modified || 0) - (a.modified || 0);
+      });
 
       currentResults = groups;
 
