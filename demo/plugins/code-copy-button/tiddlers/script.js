@@ -3,7 +3,7 @@ title: $:/plugins/byper/code-copy-button/script.js
 type: application/javascript
 module-type: startup
 
-为代码块添加复制按钮的启动模块
+Startup module to add copy buttons to code blocks
 \*/
 
 /*jslint node: true, browser: true */
@@ -15,7 +15,7 @@ const copyIconSVG =
 const checkIconSVG =
   '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
 
-// 创建复制功能（仅使用现代 Clipboard API）
+// Create copy functionality (using modern Clipboard API only)
 const copyToClipboard = async (text, button) => {
   const originalHTML = button.innerHTML;
 
@@ -28,35 +28,35 @@ const copyToClipboard = async (text, button) => {
       button.classList.remove("tc-copied");
     }, 2000);
   } catch (err) {
-    console.error("复制失败:", err);
-    // 可以在这里添加一个简单的错误提示，或者保持按钮不变
+    console.error("Copy failed:", err);
+    // You can add a simple error tooltip here, or keep the button unchanged
   }
 };
 
-// 为代码块添加复制按钮
+// Add copy buttons to code blocks
 const addCopyButtonToCodeBlocks = () => {
-  // 处理独立代码块 <pre><code>
+  // Handle standalone code blocks <pre><code>
   const codeBlocks = document.querySelectorAll("pre > code:not(.tc-processed)");
 
   codeBlocks.forEach((codeBlock) => {
     const pre = codeBlock.parentElement;
 
-    // 避免重复处理
+    // Avoid duplicate processing
     codeBlock.classList.add("tc-processed");
 
-    // 如果 pre 还没有被包装
+    // If pre is not yet wrapped
     if (!pre.parentElement.classList.contains("tc-code-wrapper")) {
       const wrapper = document.createElement("div");
       wrapper.className = "tc-code-wrapper";
       pre.parentNode.insertBefore(wrapper, pre);
       wrapper.appendChild(pre);
 
-      // 创建复制按钮
+      // Create copy button
       const button = document.createElement("button");
       button.className = "tc-copy-button";
       button.innerHTML = copyIconSVG;
-      button.setAttribute("aria-label", "复制代码");
-      button.setAttribute("title", "复制代码");
+      button.setAttribute("aria-label", "Copy code");
+      button.setAttribute("title", "Copy code");
 
       button.addEventListener("click", (e) => {
         e.preventDefault();
@@ -68,31 +68,31 @@ const addCopyButtonToCodeBlocks = () => {
     }
   });
 
-  // 处理行内代码 <code>（不在 pre 中的）
+  // Handle inline code <code> (not inside pre)
   const inlineCodes = document.querySelectorAll(
     "code:not(pre > code):not(.tc-processed)",
   );
 
   inlineCodes.forEach((code) => {
-    // 跳过太短的代码
+    // Skip very short code
     if (code.textContent.trim().length < 3) return;
 
     code.classList.add("tc-processed", "tc-has-copy-button");
 
-    // 创建行内代码包装器
+    // Create inline code wrapper
     const wrapper = document.createElement("span");
     wrapper.className = "tc-inline-code-wrapper";
     code.parentNode.insertBefore(wrapper, code);
     wrapper.appendChild(code);
 
-    // 创建行内复制按钮（放在 code 元素后面）
+    // Create inline copy button (placed after code element)
     const button = document.createElement("button");
     button.className = "tc-inline-copy-button";
     button.innerHTML = copyIconSVG;
-    button.setAttribute("aria-label", "复制代码");
-    button.setAttribute("title", "复制");
+    button.setAttribute("aria-label", "Copy code");
+    button.setAttribute("title", "Copy");
 
-    // 将按钮插入到 code 元素之后
+    // Insert button after code element
     code.parentNode.insertBefore(button, code.nextSibling);
 
     button.addEventListener("click", (e) => {
@@ -103,27 +103,27 @@ const addCopyButtonToCodeBlocks = () => {
   });
 };
 
-// 导出名称和同步执行
+// Export name and synchronous execution
 exports.name = "code-copy-button";
 exports.platforms = ["browser"];
 exports.after = ["render"];
 exports.synchronous = true;
 
 exports.startup = () => {
-  // 初始执行
+  // Initial execution
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", addCopyButtonToCodeBlocks);
   } else {
     addCopyButtonToCodeBlocks();
   }
 
-  // 监听 TiddlyWiki 的渲染事件
+  // Listen for TiddlyWiki rendering events
   $tw.hooks.addHook("th-rendering-tiddler", (event) => {
-    // 延迟执行，确保 DOM 已更新
+    // Delay execution to ensure DOM is updated
     setTimeout(addCopyButtonToCodeBlocks, 10);
   });
 
-  // 使用 MutationObserver 监听 DOM 变化
+  // Use MutationObserver to monitor DOM changes
   const observer = new MutationObserver((mutations) => {
     const shouldUpdate = mutations.some(
       (mutation) => mutation.addedNodes.length > 0,
@@ -133,11 +133,11 @@ exports.startup = () => {
     }
   });
 
-  // 监听整个文档
+  // Observe the entire document
   observer.observe(document.body, {
     childList: true,
     subtree: true,
   });
 
-  console.log("代码复制按钮插件已加载");
+  console.log("Code copy button plugin loaded");
 };

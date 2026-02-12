@@ -1,17 +1,17 @@
 title: $:/plugins/byper/code-copy-button/styles
 tags: $:/tags/Stylesheet
 
-/* 代码块 */
+/* Code Blocks */
 .tc-code-wrapper {
   position: relative;
   margin: 1em 0;
 
   & > pre {
     margin: 0;
-    padding-right: 45px; /* 为按钮留出空间 */
+    padding-right: 45px; /* Reserve space for the button */
   }
 
-  /* 复制按钮样式 */
+  /* Copy Button Styles */
   & > .tc-copy-button {
     position: absolute;
     top: 8px;
@@ -50,7 +50,7 @@ tags: $:/tags/Stylesheet
   }
 }
 
-/* 行内代码 */
+/* Inline Code */
 .tc-inline-code-wrapper {
   display: inline-block;
   position: relative;
