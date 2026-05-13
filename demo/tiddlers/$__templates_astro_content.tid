@@ -1,0 +1,4 @@
+title: $:/templates/astro/content
+type: text/vnd.tiddlywiki
+
+<$view field="text" format="htmlwikified"/>

@@ -1,0 +1,14 @@
+title: $:/templates/astro/metadata
+type: text/vnd.tiddlywiki
+
+[
+<$list filter="[tag[Public]]" join=",">
+{
+  "title": "<$view field='title' format='json'/>",
+  "created": "<$view field='created' format='json'/>",
+  "modified": "<$view field='modified' format='json'/>",
+  "tags": [<$list filter="[all[current]tags[]]" variable="tag" join=","><$text text='"'/><$view tiddler=<<tag>> field='title' format='json'/><$text text='"' /></$list>],
+  "slug": "<$text text={{{ [{!!title}slugify[]] }}}/>"
+}
+</$list>
+]

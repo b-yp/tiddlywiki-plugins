@@ -1,0 +1,51 @@
+---
+import { getAllPosts, parseTWDate, postToSlug } from '../lib/tiddlywiki';
+
+const posts = getAllPosts();
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我的博客</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="site-title">✍️ 我的博客</h1>
+      <p class="site-desc">由 TiddlyWiki 驱动，Astro 发布</p>
+    </div>
+  </header>
+
+  <main class="container">
+    {posts.length === 0 ? (
+      <p class="empty">没有找到文章。请确认已运行 <code>tiddlywiki demo --build astro</code>。</p>
+    ) : (
+      <ul class="post-list">
+        {posts.map((post) => {
+          const date = parseTWDate(post.modified);
+          const dateStr = date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+          return (
+            <li class="post-card">
+              <a href={`/posts/${postToSlug(post)}`} class="post-link">
+                <h2 class="post-title">{post.title}</h2>
+                <div class="post-meta">
+                  <time datetime={date.toISOString()}>{dateStr}</time>
+                  {post.tags.filter(t => t !== 'Public').length > 0 && (
+                    <span class="tags">
+                      {post.tags.filter(t => t !== 'Public').map(tag => <span class="tag">{tag}</span>)}
+                    </span>
+                  )}
+                </div>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    )}
+  </main>
+</body>
+</html>

@@ -3,7 +3,12 @@
   "private": true,
   "scripts": {
     "serve": "tiddlywiki demo --listen",
-    "build": "tiddlywiki demo --build"
+    "build": "tiddlywiki demo --build",
+    "build:astro": "tiddlywiki demo --build astro",
+    "blog:dev": "bun run --cwd packages/blog dev",
+    "blog:build": "bun run --cwd packages/blog build",
+    "publish": "bun run build:astro && bun run blog:build",
+    "blog:deploy": "bun run publish && bun run --cwd packages/blog wrangler pages deploy dist --project-name tiddlywiki-blog --branch dev"
   },
   "devDependencies": {
     "@types/bun": "latest"

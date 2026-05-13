@@ -1,0 +1,6 @@
+title: $:/plugins/byper/astro-headless/page-control
+tags: $:/tags/PageControls
+caption: Astro Build
+description: Build the Astro static site
+
+<$astro-build-button />

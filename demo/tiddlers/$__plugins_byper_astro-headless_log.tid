@@ -1,0 +1,44 @@
+modified: 20260513041934231
+title: $:/plugins/byper/astro-headless/log
+type: text/vnd.tiddlywiki
+
+!! Build Log (2026/5/13 12:19:29)
+
+* Duration: `5.05s`
+* Status: ✅ Success
+
+!!! Stdout
+```
+syncer-server-filesystem: Dispatching 'save' task: $:/StoryList
+[2m12:19:33[22m [34m[content][39m Syncing content
+[2m12:19:33[22m [34m[content][39m Synced content
+[2m12:19:33[22m [34m[types][39m Generated [2m61ms[22m
+[2m12:19:33[22m [34m[build][39m output: [34m"static"[39m
+[2m12:19:33[22m [34m[build][39m mode: [34m"static"[39m
+[2m12:19:33[22m [34m[build][39m directory: [34mD:\byp\repositories\tiddlywiki-plugins\packages\blog\dist\[39m
+[2m12:19:33[22m [34m[build][39m Collecting build info...
+[2m12:19:33[22m [34m[build][39m [32m✓ Completed in 81ms.[39m
+[2m12:19:33[22m [34m[build][39m Building static entrypoints...
+[2m12:19:34[22m [34m[vite][39m [32m✓ built in 889ms[39m
+[2m12:19:34[22m [34m[build][39m [32m✓ Completed in 938ms.[39m
+
+[42m[30m generating static routes [39m[49m
+[2m12:19:34[22m [32m▶[39m src/pages/posts/[slug].astro
+[2m12:19:34[22m   [34m└─[39m [2m/posts/20260304030000000/index.html[22m [2m(+10ms)[22m 
+[2m12:19:34[22m [32m▶[39m src/pages/index.astro
+[2m12:19:34[22m   [34m└─[39m [2m/index.html[22m [2m(+3ms)[22m 
+[2m12:19:34[22m [32m✓ Completed in 31ms.
+[39m
+[2m12:19:34[22m [34m[build][39m 2 page(s) built in [1m1.07s[22m
+[2m12:19:34[22m [34m[build][39m [1mComplete![22m
+
+```
+
+!!! Stderr
+```
+$ bun run build:astro && bun run blog:build
+$ tiddlywiki demo --build astro
+$ bun run --cwd packages/blog build
+$ astro build
+
+```

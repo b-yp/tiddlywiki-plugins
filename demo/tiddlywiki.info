@@ -34,6 +34,17 @@
             "$:/core/templates/static.template.css",
             "static/static.css",
             "text/plain"
+        ],
+        "astro": [
+             "--render",
+             "$:/plugins/byper/astro-headless/templates/metadata",
+             "astro/db.json",
+             "text/plain",
+             "--render",
+             "[tag[Public]]",
+             "[encodeuricomponent[]addprefix[astro/content/]addsuffix[.html]]",
+             "text/plain",
+             "$:/plugins/byper/astro-headless/templates/content"
         ]
     }
 }

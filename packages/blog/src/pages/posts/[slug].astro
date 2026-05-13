@@ -1,0 +1,49 @@
+---
+import { getAllPosts, getPostContent, getPostBySlug, parseTWDate } from '../../lib/tiddlywiki';
+
+export async function getStaticPaths() {
+  const posts = getAllPosts();
+  return posts.map((post) => ({
+    // 用 created 时间戳作为 slug：纯 ASCII 数字，完全 URL 安全
+    params: { slug: post.created },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const content = getPostContent(post.title) ?? '<p>内容暂时无法加载。</p>';
+const date = parseTWDate(post.modified);
+const dateStr = date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{post.title} | 我的博客</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="back-link">← 返回首页</a>
+    </div>
+  </header>
+
+  <main class="container article-container">
+    <article>
+      <h1 class="article-title">{post.title}</h1>
+      <div class="article-meta">
+        <time datetime={date.toISOString()}>{dateStr}</time>
+        {post.tags.filter(t => t !== 'Public').length > 0 && (
+          <span class="tags">
+            {post.tags.filter(t => t !== 'Public').map(tag => <span class="tag">{tag}</span>)}
+          </span>
+        )}
+      </div>
+      <div class="article-body tw-content" set:html={content} />
+    </article>
+  </main>
+</body>
+</html>

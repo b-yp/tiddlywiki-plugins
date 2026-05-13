@@ -1,0 +1,16 @@
+title: $:/plugins/byper/astro-headless/readme
+type: text/vnd.tiddlywiki
+
+! Astro Headless Plugin
+
+This plugin provides a Headless CMS integration for Astro.
+
+!! Usage
+
+1. Add the `<$astro-build-button/>` widget to your wiki.
+2. Tag your blog posts with `Public`.
+3. Click the button to export data and build your Astro site.
+
+!! Build Log
+
+Check [[$:/plugins/byper/astro-headless/log]] for the latest build status.
