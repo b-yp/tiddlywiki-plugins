@@ -1,0 +1,24 @@
+title: $:/plugins/byper/blur-lock/readme
+
+! Blur Lock
+
+''Blur Lock'' is a privacy-focused plugin for TiddlyWiki that allows you to hide sensitive tiddler content behind a password-gated placeholder.
+
+!! Key Features
+
+*   ''Anti-Peeking'': Hides content using a placeholder card, preventing casual observers from reading your private data.
+*   ''Secure Hashing'': Passwords are never stored in plain text. We use SHA-256 hashing via the browser's SubtleCrypto API.
+*   ''Session-Based'': Unlocking is temporary. Once you refresh the page, all protected tiddlers are automatically locked again.
+*   ''Seamless Integration'': Adds a native lock icon to the tiddler toolbar and a global control in the sidebar.
+
+!! How to Use
+
+#   ''Setup'': Go to the Control Panel -> Settings -> Blur Lock to set your master password.
+#   ''Protect'': Add the tag `lock` to any tiddler you want to protect. Its content will immediately be replaced by a "Hidden" placeholder.
+#   ''Unlock'':
+    *   Click the ''Lock Icon'' 🔒 in the tiddler's toolbar to unlock that specific tiddler (or all tiddlers).
+    *   Alternatively, use the ''Global Lock Icon'' in the sidebar to unlock everything at once.
+
+!! Important Note
+
+This plugin is designed for ''privacy protection'' (preventing casual peeking) rather than heavy-duty encryption. It does not modify the underlying data of your tiddlers. If someone has technical access to your TiddlyWiki file, they can still retrieve the data.

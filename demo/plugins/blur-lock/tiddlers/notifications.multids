@@ -1,0 +1,7 @@
+title: $:/plugins/byper/blur-lock/notify/
+
+success: Password updated successfully!
+wrong-password: Wrong password! Access denied.
+wrong-old-password: Current password verification failed!
+mismatch: New passwords do not match!
+empty-new-password: New password cannot be empty!

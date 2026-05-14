@@ -1,0 +1,15 @@
+title: Blur Lock Demo (Default Password: 1234)
+created: 20260514165400000
+modified: 20260514165400000
+tags: lock
+
+This is a privacy-protected tiddler. As you can see, the content is hidden by the ''Blur Lock'' plugin.
+
+!! How to view this content?
+
+# Look at the top right corner of this tiddler.
+# Click the ''Lock icon'' 🔒.
+# Enter the password: `1234`
+# Click ''Unlock Now''.
+
+Once unlocked, this text will become visible. The unlock status is temporary and will reset if you refresh the page. Enjoy your privacy!

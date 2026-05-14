@@ -1,5 +1,5 @@
 created: 20251227111435822
-modified: 20251227111714948
+modified: 20260514085854169
 tags: 
 title: Plugins
 type: text/vnd.tiddlywiki
@@ -12,3 +12,4 @@ Repository: https://github.com/b-yp/tiddlywiki-plugins
 * [[$:/plugins/byper/publisher]]
 * [[$:/plugins/byper/image-preview]]
 * [[$:/plugins/byper/advanced-search]]
+* [[$:/plugins/byper/blur-lock]]

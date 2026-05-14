@@ -1,0 +1,10 @@
+title: $:/plugins/byper/blur-lock/ui/Placeholder
+tags: $:/tags/ViewTemplate
+
+<$list filter="[all[current]tag[lock]] :filter[{$:/state/byper/blur-lock/unlocked}!match[yes]]" variable="ignore">
+    <div class="tc-blur-lock-placeholder">
+        <span class="tc-blur-lock-placeholder-icon">🔐</span>
+        <h4>Content Hidden</h4>
+        <p>This tiddler is privacy-protected. Click the "Lock" icon in the toolbar to unlock.</p>
+    </div>
+</$list>

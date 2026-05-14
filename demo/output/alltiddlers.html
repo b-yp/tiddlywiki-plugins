@@ -2693,7 +2693,75 @@ a.tc-tiddlylink:hover {
     background: ;
 }.advanced-search-match-item:first-child {
     border-top: none;
-}/* Type hint icon or label could involve here *//* Code Blocks */
+}/* Type hint icon or label could involve here *//* 锁定状态下隐藏正文 */
+.tc-blur-lock-active .tc-tiddler-body {
+    display: none !important;
+}
+
+/* 占位符卡片 */
+.tc-blur-lock-placeholder {
+    padding: 60px 20px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.02);
+    border: 2px dashed rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin: 15px 0;
+    color: #888;
+}
+
+html.tc-dark-mode .tc-blur-lock-placeholder {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 修复后的下拉弹窗：移除 flex，确保可见性 */
+.tc-blur-lock-dropdown {
+    min-width: 260px;
+    padding: 20px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+    border: 1px solid <<colour dropdown-border>> !important;
+    background: <<colour dropdown-background>> !important;
+    color: <<colour foreground>> !important; /* 强制使用主题文字颜色 */
+    text-align: center;
+    z-index: 1000;
+}
+
+.tc-blur-lock-dropdown h3 {
+    margin: 0 0 15px 0;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: <<colour foreground>>;
+}
+
+/* 现代感输入框 */
+.tc-blur-lock-dropdown input[type="password"] {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    border: 1px solid <<colour tiddler-border>>;
+    border-radius: 6px;
+    background: <<colour tiddler-background>>;
+    color: <<colour foreground>>;
+    box-sizing: border-box; /* 关键：防止输入框溢出 */
+}
+
+/* 按钮 */
+.tc-blur-lock-btn-primary {
+    width: 100%;
+    padding: 8px 16px;
+    background: <<colour primary>>;
+    color: <<colour background>> !important;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tc-blur-lock-btn-primary:hover {
+    filter: brightness(1.1);
+}
+/* Code Blocks */
 .tc-code-wrapper {
   position: relative;
   margin: 1em 0;& > pre {
@@ -3189,22 +3257,37 @@ background-image: -ms-linear-gradient(left, rgba(0,0,0,0.05) 0%, rgba(255,255,25
 <body class="tc-body">
 
 <section class="tc-story-river tc-static-story-river">
-<a name="Customising Tiddler File Naming">
+<a name="Blur Lock Demo (Default Password: 1234)">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists  tc-tagged-lock" data-tags="lock" data-tiddler-title="Blur Lock Demo (Default Password: 1234)" role="article"><div class="tc-tiddler-title tc-clearfix"><div class="tc-titlebar"><span class="tc-tiddler-controls"><button aria-expanded="false" aria-label="more" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fmore-tiddler-actions" title="More actions"></button><span class=" tc-reveal" hidden="true"></span><button aria-label="Edit this tiddler" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fedit" title="Edit this tiddler"></button><button aria-label="close" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fclose" title="Close this tiddler"></button><span class="tc-popup-keep"><button aria-expanded="false" class="tc-btn-invisible tc-btn-%24%3A%2Fplugins%2Fbyper%2Fblur-lock%2Fui%2FButtons%2FUnlock" title="Unlock this tiddler"><svg class="tc-image-locked-padlock tc-image-button" height="22pt" viewBox="0 0 128 128" width="22pt"><path d="M96.472 64H105v32.01C105 113.674 90.674 128 73.001 128H56C38.318 128 24 113.677 24 96.01V64h8c.003-15.723.303-47.731 32.16-47.731 31.794 0 32.305 32.057 32.312 47.731zm-15.897 0H48.44c.002-16.287.142-32 15.719-32 15.684 0 16.977 16.136 16.415 32zM67.732 92.364A8.503 8.503 0 0064.5 76a8.5 8.5 0 00-3.498 16.25l-5.095 22.77H72.8l-5.07-22.656z" fill-rule="evenodd"></path></svg></button></span><span class="tc-drop-down tc-blur-lock-dropdown tc-popup-keep tc-reveal" hidden="true"></span></span><span><h2 class="tc-title">Blur Lock Demo (Default Password: 1234)</h2></span></div><div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div></div><div class="tc-reveal"></div><div class=" tc-reveal"><div class="tc-subtitle tc-clearfix">15th May 2026 at 12:54am</div></div><div class=" tc-reveal"><div class="tc-tags-wrapper"><span class="tc-tag-list-item" data-tag-title="lock"><span aria-expanded="false" class="tc-tag-label tc-btn-invisible" draggable="true" style="fill:#333333;color:#333333;"><span class="tc-tag-missing">lock</span></span><span class="tc-drop-down tc-reveal" hidden="true"></span></span></div></div><div class="tc-tiddler-body tc-clearfix tc-reveal"><p>This is a privacy-protected tiddler. As you can see, the content is hidden by the <strong>Blur Lock</strong> plugin.</p><h2 class="">How to view this content?</h2><ol><li>Look at the top right corner of this tiddler.</li><li>Click the <strong>Lock icon</strong> 🔒.</li><li>Enter the password: <code>1234</code></li><li>Click <strong>Unlock Now</strong>.</li></ol><p>Once unlocked, this text will become visible. The unlock status is temporary and will reset if you refresh the page. Enjoy your privacy!
+</p></div>
+
+    <div class="tc-blur-lock-placeholder">
+        <span class="tc-blur-lock-placeholder-icon">🔐</span>
+        <h4>Content Hidden</h4>
+        <p>This tiddler is privacy-protected. Click the "Lock" icon in the toolbar to unlock.</p>
+    </div>
+
+</div>
+</a><a name="Customising Tiddler File Naming">
 <div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists  tc-tagged-TiddlyWiki%20on%20Node.js" data-tags="[[TiddlyWiki on Node.js]]" data-tiddler-title="Customising Tiddler File Naming" role="article"><div class="tc-tiddler-title tc-clearfix"><div class="tc-titlebar"><span class="tc-tiddler-controls"><button aria-expanded="false" aria-label="more" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fmore-tiddler-actions" title="More actions"></button><span class=" tc-reveal" hidden="true"></span><button aria-label="Edit this tiddler" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fedit" title="Edit this tiddler"></button><button aria-label="close" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fclose" title="Close this tiddler"></button></span><span><h2 class="tc-title">Customising Tiddler File Naming</h2></span></div><div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div></div><div class="tc-reveal"></div><div class=" tc-reveal"><div class="tc-subtitle tc-clearfix">4th August 2021 at 4:46am</div></div><div class=" tc-reveal"><div class="tc-tags-wrapper"><span class="tc-tag-list-item" data-tag-title="TiddlyWiki on Node.js"><span aria-expanded="false" class="tc-tag-label tc-btn-invisible" draggable="true" style="fill:#333333;color:#333333;"><span class="tc-tag-missing">TiddlyWiki on Node.js</span></span><span class="tc-drop-down tc-reveal" hidden="true"></span></span></div></div><div class="tc-tiddler-body tc-clearfix tc-reveal"><p>By default, a <a class="tc-tiddlylink tc-tiddlylink-missing" href="#TiddlyWiki%20on%20Node.js">TiddlyWiki on Node.js</a> instance using a <a class="tc-tiddlylink tc-tiddlylink-missing" href="#TiddlyWikiFolders">wiki folder</a> will create new tiddler files by using the sanitised and disambiguated title as filename. All filepath operations are relative to a <code>default-tiddler-location</code> which defaults to the wiki folder's <code>tiddlers/</code> directory. This can be overridden by mapping a path in the wiki's tiddlywiki.info file, by using a <code>default-tiddler-location</code> property in the <code>config</code> object.</p><p>The default file extension of <code>.tid</code> is used for tiddlers that are missing the <code>type</code> field, or for tiddlers of type "text/vnd.tiddlywiki". Tiddlers of other types are saved according to their MIME types (defined at boot startup).</p><p>Both the logical path (directory and file name) and the file extension can be customised independently by creating optional tiddlers <a class="tc-tiddlylink tc-tiddlylink-missing" href="#%24%3A%2Fconfig%2FFileSystemPaths">$:/config/FileSystemPaths</a> and <a class="tc-tiddlylink tc-tiddlylink-missing" href="#%24%3A%2Fconfig%2FFileSystemExtensions">$:/config/FileSystemExtensions</a>.</p><h1 class="">File System Paths</h1><p>The logical path can be customised by creating a <a class="tc-tiddlylink tc-tiddlylink-missing" href="#%24%3A%2Fconfig%2FFileSystemPaths">$:/config/FileSystemPaths</a> tiddler containing one or more <a class="tc-tiddlylink tc-tiddlylink-missing" href="#Filter%20Syntax">filter expressions</a>, each on a line of its own. Every time a tiddler is saved to disk it is tested against each filter in turn, and the first output of the first filter to produce any output is taken as a logical path to be used for the tiddler file. If the logical path has changed a new file is created and the old file is deleted.</p><p>Tiddlers are limited to being written to the <a class="tc-tiddlylink tc-tiddlylink-missing" href="#TiddlyWikiFolders">wiki folder</a>, the path defined in the <code>default-tiddler-location</code> setting, or the specific path saved in the <a class="tc-tiddlylink tc-tiddlylink-missing" href="#%24%3A%2Fconfig%2FOriginalTiddlerPaths">$:/config/OriginalTiddlerPaths</a> tiddler (see <a class="tc-tiddlylink tc-tiddlylink-missing" href="#tiddlywiki.files%20Files">tiddlywiki.files Files</a>). Any error saving a tiddler to disk, with a logical path that does not start with the wiki folder's path the most common error, causes the filepath to be encoded via Javascript's <code>encodeURIComponent()</code> method and the tiddler is saved as this file in the wiki folder's <code>default-tiddler-location</code>.</p><p>Logical paths do not include the file-on-disk's extension (see below), and they can use <code>/</code> or <code>\</code> as directory separator (when generating the physical path, this is replaced by the correct separator for the platform TiddlyWiki is running on). If none of the filters match, the logical path is simply the title with all occurrences of the characters <code>/\&lt;&gt;~:"|?*^</code> replaced by <code>_</code> in order to guarantee that the resulting path is legal on all supported platforms. Logical paths are also  limited to 200 characters. If a file with this name already exists, a space and a number will be appended to the final filepath, and with the number incremented until an unused path is found.</p><h2 class="">Example</h2><pre><code>[is[system]!has[draft.of]removeprefix[$:/]addprefix[_system/]]
 [is[draft]search-replace:g:regexp[/|\\],[_]addprefix[drafts/]]
 [tag[task]addprefix[mytasks/]]
 [!tag[externalnote]addprefix[wiki/]]</code></pre><p>This will store newly created system tiddlers that are not drafts of other tiddlers in <code>./_system/</code> (after stripping the <code>$:/</code> prefix). Next, all drafts have the path separator characters in their titles replaced by "_" and are stored in <code>./drafts/</code>. Then tiddlers tagged <a class="tc-tiddlylink tc-tiddlylink-missing" href="#task">task</a> are stored in a subdirectory <code>./mytasks/</code>. Finally, all tiddlers not tagged with "externalnote" will match the final <code>[!tag[externalnote]addprefix[wiki/]]</code> storing these in <code>./wiki/</code>. In this example, tiddlers tagged with "externalnote" have been imported using <a class="tc-tiddlylink tc-tiddlylink-missing" href="#tiddlywiki.files%20Files">tiddlywiki.files Files</a> with an "isEditableFile" flag set to true, causing the server to remember their original file path in the <a class="tc-tiddlylink tc-tiddlylink-missing" href="#%24%3A%2Fconfig%2FOriginalTiddlerPaths">$:/config/OriginalTiddlerPaths</a> tiddler.</p><p>Whenever a tiddler generates a <a class="tc-tiddlylink tc-tiddlylink-missing" href="#%24%3A%2Fconfig%2FFileSystemPaths">$:/config/FileSystemPaths</a> filter match, any <code>/</code> or <code>\</code> in the tiddler title is mapped to a path separator. With the above filters, the non-system, non-draft tiddler titled <code>some/thing/entirely/new</code> (with no tags) will be saved to <code>./wiki/some/thing/entirely/new.tid</code> (ie, the file <code>new.tid</code> in a directory called <code>entirely/</code>). Thus, <a class="tc-tiddlylink tc-tiddlylink-missing" href="#%24%3A%2Fconfig%2FFileSystemPaths">$:/config/FileSystemPaths</a> itself will end up in <code>./_system/config/FileSystemPaths.tid</code> or <code>.\_system\config\FileSystemPaths.tid</code>, depending on the platform.</p><h1 class="">File System Extensions</h1><p>Normally, the file system extension of a tiddler on disk is determined by the presence of field values containing newlines or field values that start or end with whitespace (other than the text field), in which case the single file ".json" tiddler file format is used.</p><p>If the tiddler does not have such field values, then the <code>type</code> field is referenced to find a matching file-type, with <code>.tid</code> used for tiddlers without a type value. The boot engine defines a set of these tiddler-type to file-type relationships in the <a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fboot%2Fboot.js">$:/boot/boot.js</a> tiddler. Search for <code>// Add file extension information</code> to find the section of code that defines these relationships.</p><p>The file extension of individual tiddlers can be customised by creating a tiddler <a class="tc-tiddlylink tc-tiddlylink-missing" href="#%24%3A%2Fconfig%2FFileSystemExtensions">$:/config/FileSystemExtensions</a> containing one or more <a class="tc-tiddlylink tc-tiddlylink-missing" href="#Filter%20Syntax">filter expressions</a>, each on a line of its own. Every time a tiddler is saved to disk it is tested against these filters, and the first output of the first filter to produce any output is taken as the file extension to be used for the tiddler file. Extensions should always start with a leading dot (see example).  If no filter matches, the default extension is used. If the extension has changed a new file is created and the old file is deleted.</p><h2 class="">Example</h2><pre><code>[tag[.txt]then[.txt]]
 [tag[.json]then[.json]]
 [tag[.tid]then[.tid]]</code></pre><p>This will cause all tiddlers that have the tag ".txt" to be saved at the filepath determined by the File System Paths filters, but with their text field saved as a *.txt file, and all other fields saved as a *.txt.meta file.</p><p>Next, all tiddlers that have the ".json" tag are saved as *.json files. Finally, all tiddlers that have tag ".tid" are saved as single files. If a tiddler matches none of the filters, the default extension determined by the tiddlers <code>type</code> field would be used.</p></div>
+
 </div>
 </a><a name="D:\byp\repositories\tiddlywiki-plugins\demo\tiddlers\$__StoryList_1.tid">
 <div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists " data-tags="" data-tiddler-title="D:\byp\repositories\tiddlywiki-plugins\demo\tiddlers\$__StoryList_1.tid" role="article"><div class="tc-tiddler-title tc-clearfix"><div class="tc-titlebar"><span class="tc-tiddler-controls"><button aria-expanded="false" aria-label="more" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fmore-tiddler-actions" title="More actions"></button><span class=" tc-reveal" hidden="true"></span><button aria-label="Edit this tiddler" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fedit" title="Edit this tiddler"></button><button aria-label="close" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fclose" title="Close this tiddler"></button></span><span><h2 class="tc-title">D:\byp\repositories\tiddlywiki-plugins\demo\tiddlers\$__StoryList_1.tid</h2></span></div><div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div></div><div class="tc-reveal"></div><div class=" tc-reveal"><div class="tc-subtitle tc-clearfix"></div></div><div class=" tc-reveal"><div class="tc-tags-wrapper"></div></div><div class="tc-tiddler-body tc-clearfix tc-reveal"></div>
+
 </div>
 </a><a name="D:\byp\repositories\tiddlywiki-plugins\demo\tiddlers\$__StoryList.tid">
 <div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists " data-tags="" data-tiddler-title="D:\byp\repositories\tiddlywiki-plugins\demo\tiddlers\$__StoryList.tid" role="article"><div class="tc-tiddler-title tc-clearfix"><div class="tc-titlebar"><span class="tc-tiddler-controls"><button aria-expanded="false" aria-label="more" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fmore-tiddler-actions" title="More actions"></button><span class=" tc-reveal" hidden="true"></span><button aria-label="Edit this tiddler" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fedit" title="Edit this tiddler"></button><button aria-label="close" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fclose" title="Close this tiddler"></button></span><span><h2 class="tc-title">D:\byp\repositories\tiddlywiki-plugins\demo\tiddlers\$__StoryList.tid</h2></span></div><div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div></div><div class="tc-reveal"></div><div class=" tc-reveal"><div class="tc-subtitle tc-clearfix"></div></div><div class=" tc-reveal"><div class="tc-tags-wrapper"></div></div><div class="tc-tiddler-body tc-clearfix tc-reveal"></div>
+
 </div>
 </a><a name="Plugins">
-<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists " data-tags="" data-tiddler-title="Plugins" role="article"><div class="tc-tiddler-title tc-clearfix"><div class="tc-titlebar"><span class="tc-tiddler-controls"><button aria-expanded="false" aria-label="more" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fmore-tiddler-actions" title="More actions"></button><span class=" tc-reveal" hidden="true"></span><button aria-label="Edit this tiddler" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fedit" title="Edit this tiddler"></button><button aria-label="close" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fclose" title="Close this tiddler"></button></span><span><h2 class="tc-title">Plugins</h2></span></div><div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div></div><div class="tc-reveal"></div><div class=" tc-reveal"><div class="tc-subtitle tc-clearfix">27th December 2025 at 7:17pm</div></div><div class=" tc-reveal"><div class="tc-tags-wrapper"></div></div><div class="tc-tiddler-body tc-clearfix tc-reveal"><p>Repository: <a class="tc-tiddlylink-external" href="https://github.com/b-yp/tiddlywiki-plugins" rel="noopener noreferrer" target="_blank">https://github.com/b-yp/tiddlywiki-plugins</a></p><hr><ul><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fcode-copy-button">$:/plugins/byper/code-copy-button</a></li><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fpublisher">$:/plugins/byper/publisher</a></li><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fimage-preview">$:/plugins/byper/image-preview</a></li><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fadvanced-search">$:/plugins/byper/advanced-search</a></li></ul></div>
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists " data-tags="" data-tiddler-title="Plugins" role="article"><div class="tc-tiddler-title tc-clearfix"><div class="tc-titlebar"><span class="tc-tiddler-controls"><button aria-expanded="false" aria-label="more" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fmore-tiddler-actions" title="More actions"></button><span class=" tc-reveal" hidden="true"></span><button aria-label="Edit this tiddler" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fedit" title="Edit this tiddler"></button><button aria-label="close" class="tc-btn-invisible tc-btn-%24%3A%2Fcore%2Fui%2FButtons%2Fclose" title="Close this tiddler"></button></span><span><h2 class="tc-title">Plugins</h2></span></div><div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div></div><div class="tc-reveal"></div><div class=" tc-reveal"><div class="tc-subtitle tc-clearfix">14th May 2026 at 4:58pm</div></div><div class=" tc-reveal"><div class="tc-tags-wrapper"></div></div><div class="tc-tiddler-body tc-clearfix tc-reveal"><p>Repository: <a class="tc-tiddlylink-external" href="https://github.com/b-yp/tiddlywiki-plugins" rel="noopener noreferrer" target="_blank">https://github.com/b-yp/tiddlywiki-plugins</a></p><hr><ul><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fcode-copy-button">$:/plugins/byper/code-copy-button</a></li><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fpublisher">$:/plugins/byper/publisher</a></li><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fimage-preview">$:/plugins/byper/image-preview</a></li><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fadvanced-search">$:/plugins/byper/advanced-search</a></li><li><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#%24%3A%2Fplugins%2Fbyper%2Fblur-lock">$:/plugins/byper/blur-lock</a></li></ul></div>
+
 </div>
 </a>
 </section>

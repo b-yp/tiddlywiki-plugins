@@ -1,0 +1,72 @@
+title: $:/plugins/byper/blur-lock/styles.tid
+tags: $:/tags/Stylesheet
+type: text/css
+
+/* 锁定状态下隐藏正文 */
+.tc-blur-lock-active .tc-tiddler-body {
+    display: none !important;
+}
+
+/* 占位符卡片 */
+.tc-blur-lock-placeholder {
+    padding: 60px 20px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.02);
+    border: 2px dashed rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin: 15px 0;
+    color: #888;
+}
+
+html.tc-dark-mode .tc-blur-lock-placeholder {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 修复后的下拉弹窗：移除 flex，确保可见性 */
+.tc-blur-lock-dropdown {
+    min-width: 260px;
+    padding: 20px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+    border: 1px solid <<colour dropdown-border>> !important;
+    background: <<colour dropdown-background>> !important;
+    color: <<colour foreground>> !important; /* 强制使用主题文字颜色 */
+    text-align: center;
+    z-index: 1000;
+}
+
+.tc-blur-lock-dropdown h3 {
+    margin: 0 0 15px 0;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: <<colour foreground>>;
+}
+
+/* 现代感输入框 */
+.tc-blur-lock-dropdown input[type="password"] {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    border: 1px solid <<colour tiddler-border>>;
+    border-radius: 6px;
+    background: <<colour tiddler-background>>;
+    color: <<colour foreground>>;
+    box-sizing: border-box; /* 关键：防止输入框溢出 */
+}
+
+/* 按钮 */
+.tc-blur-lock-btn-primary {
+    width: 100%;
+    padding: 8px 16px;
+    background: <<colour primary>>;
+    color: <<colour background>> !important;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tc-blur-lock-btn-primary:hover {
+    filter: brightness(1.1);
+}

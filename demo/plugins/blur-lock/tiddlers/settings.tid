@@ -1,0 +1,25 @@
+title: $:/plugins/byper/blur-lock/settings
+caption: Blur Lock
+tags: $:/tags/ControlPanel/Settings
+
+! Blur Lock Settings
+
+|!Status |<$list filter="[{$:/config/byper/blur-lock/password-hash}match[]]" emptyMessage="""<span style="color: <<colour primary>>; font-weight: bold;">🔐 Protection Enabled</span>"""> <span style="color: <<colour alert-foreground>>; font-weight: bold;">🔓 No Password Set (Inactive)</span> </$list> |
+
+---
+
+!! Set/Change Password
+
+|width=100% |k
+|Current Password |<$edit-text tiddler="$:/temp/byper/blur-lock/old-password" type="password" tag="input" placeholder="Verify old password..." default=""/> |
+|New Password |<$edit-text tiddler="$:/temp/byper/blur-lock/new-password" type="password" tag="input" placeholder="Enter new password..." default=""/> |
+|Confirm Password |<$edit-text tiddler="$:/temp/byper/blur-lock/confirm-password" type="password" tag="input" placeholder="Confirm new password..." default=""/> |
+| |<$button class="tc-btn-primary"> <$list filter="[{$:/config/byper/blur-lock/password-hash}match[]]" variable="ignore" emptyMessage="Update Password"> Set Initial Password </$list> <$list filter="[{$:/temp/byper/blur-lock/new-password}!match[]] :and[{$:/temp/byper/blur-lock/new-password}match{$:/temp/byper/blur-lock/confirm-password}]" variable="ignore"> <$action-sendmessage $message="tm-blurlock-change-password" oldPassword={{$:/temp/byper/blur-lock/old-password}} newPassword={{$:/temp/byper/blur-lock/new-password}} /> </$list> <$list filter="[{$:/temp/byper/blur-lock/new-password}!match{$:/temp/byper/blur-lock/confirm-password}]" variable="ignore"> <$action-sendmessage $message="tm-notify" $param="$:/plugins/byper/blur-lock/notify/mismatch"/> </$list> <$list filter="[{$:/temp/byper/blur-lock/new-password}match[]]" variable="ignore"> <$action-sendmessage $message="tm-notify" $param="$:/plugins/byper/blur-lock/notify/empty-new-password"/> </$list> </$button> |
+
+---
+
+''Usage Tips:''
+
+* Add the `lock` tag to any tiddler to hide its content.
+* Unlock status is session-based and will reset when the page is refreshed.
+* Forgot password? Search and delete `$:/config/byper/blur-lock/password-hash` to reset.

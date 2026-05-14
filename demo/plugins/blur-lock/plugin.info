@@ -1,0 +1,11 @@
+{
+	"title": "$:/plugins/byper/blur-lock",
+	"name": "Blur Lock",
+	"description": "Privacy-focused content locking with SHA-256 password protection",
+	"author": "Byper",
+	"version": "1.0.0",
+	"core-version": ">=5.1.22",
+	"source": "https://github.com/b-yp/tiddlywiki-plugins",
+	"plugin-type": "plugin",
+	"list": "readme settings"
+}

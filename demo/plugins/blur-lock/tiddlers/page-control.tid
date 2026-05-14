@@ -1,0 +1,18 @@
+title: $:/plugins/byper/blur-lock/page-control
+tags: $:/tags/PageControls
+caption: Blur Lock Unlock
+description: Unlock protected content globally
+
+\whitespace trim
+<$list filter="[{$:/state/byper/blur-lock/unlocked}!match[yes]]" variable="ignore">
+    <$button class="tc-btn-invisible tc-btn-mini" tooltip="Unlock all protected tiddlers">
+        <$action-sendmessage $message="tm-modal" $param="$:/plugins/byper/blur-lock/modal/unlock"/>
+        {{$:/core/images/locked-padlock}}
+    </$button>
+</$list>
+<$list filter="[{$:/state/byper/blur-lock/unlocked}match[yes]]" variable="ignore">
+    <$button class="tc-btn-invisible tc-btn-mini" tooltip="Re-lock everything">
+        <$action-setfield $tiddler="$:/state/byper/blur-lock/unlocked" text="no"/>
+        {{$:/core/images/unlocked-padlock}}
+    </$button>
+</$list>
