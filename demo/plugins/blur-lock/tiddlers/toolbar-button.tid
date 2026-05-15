@@ -1,5 +1,6 @@
 title: $:/plugins/byper/blur-lock/ui/Buttons/Unlock
-tags: $:/tags/ViewToolbar
+tags: $:/tags/ViewToolbar $:/tags/EditToolbar
+list-before: $:/core/ui/Buttons/edit
 caption: Blur Lock
 description: Lock/Unlock this tiddler
 
