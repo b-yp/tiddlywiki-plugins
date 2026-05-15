@@ -2679,8 +2679,16 @@ a.tc-tiddlylink:hover {
     background: ;
 }.advanced-search-match-item:first-child {
     border-top: none;
-}/* Type hint icon or label could involve here *//* 锁定状态下隐藏正文 */
-.tc-blur-lock-active .tc-tiddler-body {
+}/* Type hint icon or label could involve here *//* 锁定状态下隐藏正文和编辑器内容 */
+.tc-blur-lock-active .tc-tiddler-body,
+.tc-blur-lock-active button[aria-label*="Edit this tiddler"],
+.tc-blur-lock-active button[title*="Edit this tiddler"],
+.tc-blur-lock-active .tc-btn-edit,
+.tc-blur-lock-active .tc-edit-tags,
+.tc-blur-lock-active .tc-editor-toolbar,
+.tc-blur-lock-active .tc-edit-texteditor,
+.tc-blur-lock-active .tc-edit-type-selector-wrapper,
+.tc-blur-lock-active .tc-edit-field-add {
     display: none !important;
 }
 
